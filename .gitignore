@@ -1,0 +1,11 @@
+# NexusDash - Git Ignore Rules
+# Engineered by Online Growth Hub (https://onlinegrowthhub.in | +91 9032666855)
+
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.local
+config/db_local.php
+uploads/*
+!uploads/.gitkeep
