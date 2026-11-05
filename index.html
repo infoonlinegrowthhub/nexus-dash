@@ -1,479 +1,258 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-[#f5f8fc]">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dashboard Overview - NexusDash | Online Growth Hub</title>
-    
-    <!-- Tailwind CSS (Direct Utility CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Lucide Icons -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Clean, modular, responsive open-source admin template built with vanilla web technologies.">
+    <title>Nexus Dash - Admin Console</title>
+
+    <!-- Global Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- CDN Libraries: Lucide Icons & Chart.js -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- NexusDash Core Stylesheet -->
-    <link rel="stylesheet" href="assets/css/nexus.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="h-full flex flex-col font-sans text-slate-900 bg-[#f5f8fc] antialiased">
-    <!-- WACRM Root Viewport Container -->
-    <div class="flex h-screen h-[100dvh] max-h-[100dvh] w-full max-w-full overflow-hidden bg-[#f5f8fc]">
+<body>
+    <div class="app-container">
         
-        <!-- 1. DESKTOP SIDEBAR (>= 1024px) -->
-        <aside class="hidden lg:flex w-64 bg-white border-r border-slate-200/90 flex-col shrink-0 h-full overflow-hidden z-30 select-none shadow-xs">
-            
-            <!-- Brand Header -->
-            <div class="h-16 flex items-center justify-between px-4 border-b border-slate-200/90 shrink-0">
-                <a href="index.html" class="flex items-center gap-2.5 min-w-0">
-                    <div class="w-8 h-8 rounded-lg bg-[#25D366] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
-                        N
-                    </div>
-                    <div class="min-w-0">
-                        <span class="font-extrabold text-sm tracking-tight text-slate-900 block leading-tight truncate">NexusDash</span>
-                        <span class="text-[10px] font-medium text-slate-400 block leading-tight truncate">By Online Growth Hub</span>
+        <!-- Mobile Sidebar Backdrop Overlay -->
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <!-- 1. SIDEBAR (Fixed Desktop, Slide-out Drawer Mobile) -->
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
                     </div>
                 </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
             </div>
 
-            <!-- Navigation Menu Items - Compact Density -->
-            <nav class="flex-1 px-2.5 py-2 space-y-0.5 overflow-y-auto sidebar-scroll scroll-smooth">
-                <div class="px-2 pt-2 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                    Main Menu
-                </div>
-                
-                <!-- Active Link: Dashboard -->
-                <a href="index.html" class="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all min-h-[32px] bg-[#25D366] text-white font-semibold shadow-xs">
-                    <div class="flex items-center gap-2.5 min-w-0">
-                        <i data-lucide="layout-grid" class="w-3.5 h-3.5 shrink-0 text-white"></i>
-                        <span class="truncate">Dashboard</span>
-                    </div>
-                </a>
+            <!-- Dynamic Grouped Menu Items -->
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
 
-                <!-- Projects & Records -->
-                <a href="records.html" class="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all min-h-[32px] text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 font-medium">
-                    <div class="flex items-center gap-2.5 min-w-0">
-                        <i data-lucide="folder-kanban" class="w-3.5 h-3.5 shrink-0 text-slate-400"></i>
-                        <span class="truncate">Projects & Records</span>
-                    </div>
-                    <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-red-500 text-white">
-                        Live
-                    </span>
-                </a>
-
-                <div class="px-2 pt-3 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                    Management
-                </div>
-
-                <a href="#" class="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all min-h-[32px] text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 font-medium">
-                    <div class="flex items-center gap-2.5 min-w-0">
-                        <i data-lucide="users" class="w-3.5 h-3.5 shrink-0 text-slate-400"></i>
-                        <span class="truncate">Customers / Clients</span>
-                    </div>
-                </a>
-
-                <a href="#" class="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all min-h-[32px] text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 font-medium">
-                    <div class="flex items-center gap-2.5 min-w-0">
-                        <i data-lucide="bar-chart-3" class="w-3.5 h-3.5 shrink-0 text-slate-400"></i>
-                        <span class="truncate">Analytics & Revenue</span>
-                    </div>
-                </a>
-
-                <div class="px-2 pt-3 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                    Preferences
-                </div>
-
-                <a href="#" class="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all min-h-[32px] text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 font-medium">
-                    <div class="flex items-center gap-2.5 min-w-0">
-                        <i data-lucide="settings" class="w-3.5 h-3.5 shrink-0 text-slate-400"></i>
-                        <span class="truncate">System Settings</span>
-                    </div>
-                </a>
-            </nav>
-
-            <!-- Bottom User Account Tile -->
-            <div class="p-2.5 border-t border-slate-100 shrink-0 bg-white">
-                <div class="flex items-center justify-between p-1.5 rounded-xl bg-slate-50 border border-slate-200/70 gap-2">
-                    <div class="flex items-center gap-2 min-w-0">
-                        <div class="w-7 h-7 rounded-lg bg-teal-700 text-white font-bold text-xs flex items-center justify-center shrink-0">
-                            OG
-                        </div>
-                        <div class="min-w-0 flex-1">
-                            <p class="text-xs font-bold text-slate-900 truncate leading-tight">Admin User</p>
-                            <p class="text-[10px] font-semibold truncate leading-tight text-emerald-700">Online Growth Hub</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-0.5 shrink-0">
-                        <button type="button" class="p-1 text-slate-400 hover:text-slate-800 hover:bg-slate-200/60 rounded-md transition-colors" title="Settings">
-                            <i data-lucide="settings" class="w-3.5 h-3.5"></i>
-                        </button>
+            <!-- Bottom User Tile -->
+            <div class="sidebar-footer">
+                <div class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- Main Workspace Column -->
-        <div class="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#f5f8fc]">
+        <!-- 2. MAIN VIEWPORT WRAPPER -->
+        <div class="main-wrapper">
             
-            <!-- WACRM Topbar (No "Starter Plan") -->
-            <header class="h-16 bg-white border-b border-slate-200/90 px-2.5 sm:px-6 flex items-center justify-between shrink-0 z-20 shadow-xs">
-                
-                <!-- Left: Mobile Trigger & Search Bar -->
-                <div class="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-                    <button id="btn-mobile-menu" type="button" 
-                            class="lg:hidden w-9 h-9 sm:w-10 sm:h-10 shrink-0 -ml-1 sm:-ml-2 flex items-center justify-center text-slate-700 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
-                            aria-label="Open navigation menu">
-                        <i data-lucide="menu" class="w-5 h-5"></i>
+            <!-- TOP BAR -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
                     </button>
-
-                    <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-md hidden md:block">
-                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-                        <input type="text" placeholder="Search records, clients, projects..." 
-                               class="w-full pl-10 pr-4 py-2 bg-slate-50/80 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#25D366] transition-all">
+                    
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search records, users, orders..." aria-label="Global search">
                     </div>
-
-                    <h2 class="lg:hidden text-xs sm:text-base font-bold text-slate-900 truncate min-w-0">
-                        Dashboard
-                    </h2>
                 </div>
 
-                <!-- Right: Status, Notifications & User Avatar -->
-                <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0 ml-1 sm:ml-2 min-h-[38px]">
-                    
-                    <!-- Live Status Pill -->
-                    <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                        <span class="w-2 h-2 rounded-full bg-[#25D366]"></span>
-                        <span>System Active</span>
-                        <i data-lucide="chevron-down" class="w-3 h-3 text-emerald-600"></i>
+                <div class="topbar-right">
+                    <span class="status-pill">
+                        <span class="status-dot"></span>
+                        <span id="topbar-status-text">System healthy</span>
                     </span>
 
-                    <!-- Notifications Bell -->
-                    <div class="relative">
-                        <button id="btn-notification" type="button" 
-                                class="relative p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
-                                title="Notifications">
-                            <i data-lucide="bell" class="w-4 h-4"></i>
-                            <span class="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
-                                2
-                            </span>
-                        </button>
-                    </div>
+                    <span class="plan-pill" id="topbar-plan-text">Free plan</span>
 
-                    <!-- Help Icon -->
-                    <a href="https://onlinegrowthhub.in/" target="_blank" 
-                       class="hidden sm:flex p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
-                       title="Help & Support">
-                        <i data-lucide="help-circle" class="w-4 h-4"></i>
-                    </a>
+                    <button type="button" class="icon-btn" aria-label="View notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </button>
+
+                    <button type="button" class="icon-btn" aria-label="Help and documentation">
+                        <i data-lucide="help-circle" style="width: 18px; height: 18px;"></i>
+                    </button>
 
                     <!-- User Profile Dropdown -->
-                    <div class="relative">
-                        <button id="btn-user-menu" type="button" 
-                                class="flex items-center gap-2 p-1.5 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer focus:outline-none">
-                            <div class="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center text-xs font-bold overflow-hidden">
-                                OG
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="Toggle user menu" aria-haspopup="true">
+                            <div class="user-avatar user-initials">AU</div>
+                            <div class="user-info">
+                                <span class="user-name" id="topbar-user-name">Admin User</span>
+                                <span class="user-role" id="topbar-user-role">Administrator</span>
                             </div>
-                            <span class="hidden sm:inline text-xs font-bold text-slate-800 truncate max-w-[120px]">
-                                Online Growth Hub
-                            </span>
-                            <i data-lucide="chevron-down" class="hidden sm:inline w-3.5 h-3.5 text-slate-400"></i>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
                         </button>
 
-                        <!-- Dropdown Menu -->
-                        <div id="user-dropdown" class="absolute right-0 top-12 w-56 bg-white rounded-xl border border-slate-200 shadow-lg p-1.5 z-50 text-sm hidden">
-                            <div class="px-3 py-2 border-b border-slate-100 mb-1">
-                                <p class="font-bold text-slate-900 text-xs truncate">Admin User</p>
-                                <p class="text-[11px] text-slate-500 truncate">admin@onlinegrowthhub.in</p>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
                             </div>
-                            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors">
-                                <i data-lucide="user" class="w-4 h-4 text-slate-500"></i>
-                                <span>Profile settings</span>
+                            <a href="#" class="dropdown-item" role="menuitem">
+                                <i data-lucide="user" style="width: 15px; height: 15px;"></i>
+                                Profile Details
                             </a>
-                            <a href="https://onlinegrowthhub.in/" target="_blank" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors">
-                                <i data-lucide="external-link" class="w-4 h-4 text-slate-500"></i>
-                                <span>Visit Online Growth Hub</span>
+                            <a href="#" class="dropdown-item" role="menuitem">
+                                <i data-lucide="sliders" style="width: 15px; height: 15px;"></i>
+                                Account Preferences
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" role="menuitem">
+                                <i data-lucide="log-out" style="width: 15px; height: 15px;"></i>
+                                Sign Out
                             </a>
                         </div>
                     </div>
-
                 </div>
             </header>
 
-            <!-- Main Scrollable Content -->
-            <main class="flex-1 min-w-0 min-h-0 overflow-x-hidden overflow-y-auto pb-20 lg:pb-0 flex flex-col bg-[#f5f8fc] scroll-smooth overscroll-y-contain">
-                <div class="flex-1 min-w-0 max-w-full p-4 sm:p-6 lg:p-7 lg:max-w-[1440px] w-full mx-auto">
+            <!-- MAIN CONTENT CONTAINER -->
+            <main class="content-container">
+                
+                <!-- GREETING & PAGE ACTIONS -->
+                <section class="greeting-section" aria-label="Dashboard Overview Header">
+                    <div>
+                        <h1 class="greeting-title">Good morning, <span id="greeting-user-name">Admin User</span></h1>
+                        <p class="greeting-subtitle">Here is what is happening across your systems today.</p>
+                    </div>
+                    <div class="greeting-actions">
+                        <button type="button" class="btn-secondary" aria-label="Download analytics report">
+                            <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+                            <span>Export Report</span>
+                        </button>
+                        <button type="button" class="btn-primary" aria-label="Create new record">
+                            <i data-lucide="plus" style="width: 15px; height: 15px;"></i>
+                            <span>New Action</span>
+                        </button>
+                    </div>
+                </section>
 
-                    <!-- WACRM Page Header Component -->
-                    <div class="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-slate-200 mb-6">
-                        <div class="min-w-0 flex-1">
-                            <h1 class="text-lg sm:text-2xl font-bold tracking-tight text-slate-900 truncate">
-                                Dashboard Overview
-                            </h1>
-                            <p class="text-xs sm:text-sm font-normal text-slate-500 mt-0.5 sm:mt-1 truncate">
-                                Real-time pipeline metrics, project records, and activity summary.
-                            </p>
+                <!-- 6 KPI METRICS GRID -->
+                <section aria-label="Key Performance Indicators">
+                    <div class="kpi-grid" id="kpi-cards-grid">
+                        <!-- Rendered dynamically from data/mock.js -->
+                    </div>
+                </section>
+
+                <!-- CHARTS PANEL -->
+                <section class="charts-grid" aria-label="Analytical Visualizations">
+                    <!-- Activity Line Chart -->
+                    <div class="card-panel">
+                        <div class="card-panel-header">
+                            <div>
+                                <h2 class="panel-title">Activity Overview</h2>
+                                <p class="panel-subtitle">Performance trends and volume comparison</p>
+                            </div>
+                            <select id="chart-time-range" class="time-range-select" aria-label="Filter activity time range">
+                                <option value="7d">Last 7 Days</option>
+                                <option value="30d">Last 30 Days</option>
+                                <option value="90d">Last 90 Days</option>
+                            </select>
                         </div>
-
-                        <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
-                            <a href="records.html" 
-                               class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-xs sm:text-sm font-semibold transition-colors bg-emerald-700 text-white hover:bg-emerald-800 shadow-xs px-3.5 sm:px-4 py-2 min-h-[38px] sm:min-h-[42px] cursor-pointer">
-                                <i data-lucide="plus" class="w-4 h-4"></i>
-                                <span>New Record</span>
-                            </a>
+                        <div class="chart-wrapper">
+                            <canvas id="activity-line-chart"></canvas>
                         </div>
                     </div>
 
-                    <!-- WACRM StatTile Grid (2 cols mobile, 4 cols desktop) -->
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
-                        
-                        <!-- Stat 1: Revenue -->
-                        <div class="rounded-xl border border-slate-300 bg-white p-3.5 sm:p-5 text-slate-900 shadow-xs flex flex-col justify-between space-y-2">
-                            <div class="flex items-center justify-between gap-1.5 sm:gap-2">
-                                <span class="text-xs font-medium text-slate-500 leading-tight truncate min-w-0">Total Revenue</span>
-                                <i data-lucide="indian-rupee" class="w-4 h-4 text-slate-400 shrink-0"></i>
-                            </div>
-                            <div class="space-y-1">
-                                <div class="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900">₹2,50,000</div>
-                                <div class="text-xs font-normal text-emerald-700 truncate leading-normal flex items-center gap-1">
-                                    <i data-lucide="trending-up" class="w-3 h-3"></i>
-                                    <span>+14.2% this month</span>
-                                </div>
+                    <!-- Status Donut Chart -->
+                    <div class="card-panel">
+                        <div class="card-panel-header">
+                            <div>
+                                <h2 class="panel-title">Status Breakdown</h2>
+                                <p class="panel-subtitle">Distribution by execution outcome</p>
                             </div>
                         </div>
-
-                        <!-- Stat 2: Active Projects -->
-                        <div class="rounded-xl border border-slate-300 bg-white p-3.5 sm:p-5 text-slate-900 shadow-xs flex flex-col justify-between space-y-2">
-                            <div class="flex items-center justify-between gap-1.5 sm:gap-2">
-                                <span class="text-xs font-medium text-slate-500 leading-tight truncate min-w-0">Active Deals</span>
-                                <i data-lucide="folder-kanban" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                        <div class="donut-wrapper">
+                            <canvas id="status-donut-chart"></canvas>
+                        </div>
+                        <div class="donut-legend">
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background-color: #10b981;"></span>
+                                <span>Completed (65%)</span>
                             </div>
-                            <div class="space-y-1">
-                                <div class="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900">12 Deals</div>
-                                <div class="text-xs font-normal text-slate-500 truncate leading-normal">4 in active funnel</div>
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background-color: #3b82f6;"></span>
+                                <span>In progress (25%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background-color: #ef4444;"></span>
+                                <span>Failed (10%)</span>
                             </div>
                         </div>
-
-                        <!-- Stat 3: Total Clients -->
-                        <div class="rounded-xl border border-slate-300 bg-white p-3.5 sm:p-5 text-slate-900 shadow-xs flex flex-col justify-between space-y-2">
-                            <div class="flex items-center justify-between gap-1.5 sm:gap-2">
-                                <span class="text-xs font-medium text-slate-500 leading-tight truncate min-w-0">Total Clients</span>
-                                <i data-lucide="users" class="w-4 h-4 text-slate-400 shrink-0"></i>
-                            </div>
-                            <div class="space-y-1">
-                                <div class="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900">48 Accounts</div>
-                                <div class="text-xs font-normal text-slate-500 truncate leading-normal">+8 new acquired</div>
-                            </div>
-                        </div>
-
-                        <!-- Stat 4: System Uptime -->
-                        <div class="rounded-xl border border-slate-300 bg-white p-3.5 sm:p-5 text-slate-900 shadow-xs flex flex-col justify-between space-y-2">
-                            <div class="flex items-center justify-between gap-1.5 sm:gap-2">
-                                <span class="text-xs font-medium text-slate-500 leading-tight truncate min-w-0">System Status</span>
-                                <i data-lucide="activity" class="w-4 h-4 text-slate-400 shrink-0"></i>
-                            </div>
-                            <div class="space-y-1">
-                                <div class="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900">99.98%</div>
-                                <div class="text-xs font-normal text-emerald-700 truncate leading-normal flex items-center gap-1">
-                                    <span class="w-2 h-2 rounded-full bg-[#25D366]"></span>
-                                    <span>Hostinger Cloud Online</span>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
+                </section>
 
-                    <!-- Recent Records Header -->
-                    <div class="flex items-center justify-between mb-3">
+                <!-- QUICK ACTIONS -->
+                <section aria-label="Quick Actions">
+                    <h2 class="panel-title" style="margin-bottom: 12px;">Quick Actions</h2>
+                    <div class="quick-actions-grid" id="quick-actions-grid">
+                        <!-- Rendered dynamically from data/mock.js -->
+                    </div>
+                </section>
+
+                <!-- RECENT RECORDS TABLE -->
+                <section class="card-panel" aria-label="Recent Records">
+                    <div class="card-panel-header">
                         <div>
-                            <h2 class="text-base font-semibold text-slate-900">Recent Projects & Activity</h2>
-                            <p class="text-xs text-slate-500">Latest business records in your pipeline.</p>
+                            <h2 class="panel-title">Recent Activity</h2>
+                            <p class="panel-subtitle">Latest records and administrative events</p>
                         </div>
-                        <a href="records.html" class="text-xs font-semibold text-[#008069] hover:underline flex items-center gap-1">
-                            <span>View all records</span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        <a href="#" class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">
+                            <span>View All</span>
+                            <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
                         </a>
                     </div>
-
-                    <!-- 1. DESKTOP VIEW (>= 768px): Sticky Header Table with Crisp Borders -->
-                    <div class="hidden md:block overflow-x-auto rounded-xl border border-slate-300 bg-white shadow-xs">
-                        <table class="w-full caption-bottom text-sm text-left border-collapse">
-                            <thead class="bg-slate-100 border-b border-slate-300 sticky top-0 z-10">
+                    <div class="table-responsive-wrapper">
+                        <table class="data-table">
+                            <thead>
                                 <tr>
-                                    <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap">Project Title</th>
-                                    <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap">Client Name</th>
-                                    <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap">Category</th>
-                                    <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap">Budget</th>
-                                    <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap">Status</th>
-                                    <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap text-right">Actions</th>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Account</th>
+                                    <th>Budget</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-200 bg-white">
-                                <tr class="hover:bg-slate-50 transition-colors">
-                                    <td class="p-4 align-middle font-bold text-slate-900 text-sm">E-commerce Multi-Vendor Portal</td>
-                                    <td class="p-4 align-middle text-slate-600 text-sm">Rahul Sharma</td>
-                                    <td class="p-4 align-middle text-slate-500 text-xs">Web Application</td>
-                                    <td class="p-4 align-middle font-semibold text-slate-900 text-sm">₹45,000</td>
-                                    <td class="p-4 align-middle">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-emerald-50 text-emerald-700 border-emerald-200">
-                                            Active
-                                        </span>
-                                    </td>
-                                    <td class="p-4 align-middle text-right">
-                                        <a href="records.html" class="p-1.5 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-lg inline-flex items-center justify-center transition-colors">
-                                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-slate-50 transition-colors">
-                                    <td class="p-4 align-middle font-bold text-slate-900 text-sm">Doctor Appointment & Telehealth App</td>
-                                    <td class="p-4 align-middle text-slate-600 text-sm">Dr. Priya Mehta</td>
-                                    <td class="p-4 align-middle text-slate-500 text-xs">Custom Software</td>
-                                    <td class="p-4 align-middle font-semibold text-slate-900 text-sm">₹60,000</td>
-                                    <td class="p-4 align-middle">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-blue-50 text-blue-700 border-blue-200">
-                                            Completed
-                                        </span>
-                                    </td>
-                                    <td class="p-4 align-middle text-right">
-                                        <a href="records.html" class="p-1.5 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-lg inline-flex items-center justify-center transition-colors">
-                                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-slate-50 transition-colors">
-                                    <td class="p-4 align-middle font-bold text-slate-900 text-sm">School Management & Fee ERP</td>
-                                    <td class="p-4 align-middle text-slate-600 text-sm">DPS Academy</td>
-                                    <td class="p-4 align-middle text-slate-500 text-xs">Enterprise ERP</td>
-                                    <td class="p-4 align-middle font-semibold text-slate-900 text-sm">₹85,000</td>
-                                    <td class="p-4 align-middle">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-emerald-50 text-emerald-700 border-emerald-200">
-                                            Active
-                                        </span>
-                                    </td>
-                                    <td class="p-4 align-middle text-right">
-                                        <a href="records.html" class="p-1.5 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-lg inline-flex items-center justify-center transition-colors">
-                                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-slate-50 transition-colors">
-                                    <td class="p-4 align-middle font-bold text-slate-900 text-sm">Real Estate Lead CRM & WhatsApp Bot</td>
-                                    <td class="p-4 align-middle text-slate-600 text-sm">Apex Realty</td>
-                                    <td class="p-4 align-middle text-slate-500 text-xs">CRM Automation</td>
-                                    <td class="p-4 align-middle font-semibold text-slate-900 text-sm">₹35,000</td>
-                                    <td class="p-4 align-middle">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-amber-50 text-amber-800 border-amber-200">
-                                            Pending
-                                        </span>
-                                    </td>
-                                    <td class="p-4 align-middle text-right">
-                                        <a href="records.html" class="p-1.5 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-lg inline-flex items-center justify-center transition-colors">
-                                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                            <tbody id="recent-records-tbody">
+                                <!-- Rendered dynamically from data/mock.js -->
                             </tbody>
                         </table>
                     </div>
+                </section>
 
-                    <!-- 2. MOBILE VIEW (< 768px): Card Per Row (Zero Cut-Off) -->
-                    <div class="md:hidden space-y-3">
-                        <div class="rounded-xl border border-slate-300 bg-white p-4 shadow-xs space-y-2.5 text-sm">
-                            <div class="flex items-start justify-between gap-2">
-                                <span class="font-bold text-slate-900 leading-snug">E-commerce Multi-Vendor Portal</span>
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold border shrink-0 bg-emerald-50 text-emerald-700 border-emerald-200">
-                                    Active
-                                </span>
-                            </div>
-                            <div class="text-xs text-slate-500 flex items-center justify-between border-t border-slate-100 pt-2">
-                                <span>Client: <strong class="text-slate-800">Rahul Sharma</strong></span>
-                                <span class="font-bold text-slate-900 text-sm">₹45,000</span>
-                            </div>
-                        </div>
-
-                        <div class="rounded-xl border border-slate-300 bg-white p-4 shadow-xs space-y-2.5 text-sm">
-                            <div class="flex items-start justify-between gap-2">
-                                <span class="font-bold text-slate-900 leading-snug">Doctor Appointment App</span>
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold border shrink-0 bg-blue-50 text-blue-700 border-blue-200">
-                                    Completed
-                                </span>
-                            </div>
-                            <div class="text-xs text-slate-500 flex items-center justify-between border-t border-slate-100 pt-2">
-                                <span>Client: <strong class="text-slate-800">Dr. Priya Mehta</strong></span>
-                                <span class="font-bold text-slate-900 text-sm">₹60,000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Footer (Only the requested credit line) -->
-                <footer class="w-full border-t border-slate-200/80 bg-white px-4 sm:px-6 py-3 shrink-0 flex flex-col sm:flex-row items-center justify-center sm:justify-between text-center sm:text-left gap-1.5 sm:gap-2 text-xs text-slate-500">
-                    <span class="inline-flex items-center justify-center gap-1.5 font-medium">
-                        <span class="w-2 h-2 rounded-full bg-[#25D366]"></span>
-                        <span>NexusDash v1.0.0 • Engineered by <a href="https://onlinegrowthhub.in/" target="_blank" class="font-bold text-slate-800 hover:text-[#25D366] transition-colors underline decoration-slate-300">Online Growth Hub</a></span>
-                    </span>
-                    <span class="text-center">
-                        Hire Us for Custom Development: <a href="https://wa.me/919032666855?text=Hi%20Online%20Growth%20Hub,%20I%20am%20interested%20in%20custom%20software%20and%20web%20development." target="_blank" class="font-bold text-emerald-700 hover:text-emerald-800">+91 9032666855</a> • <a href="https://onlinegrowthhub.in/" target="_blank" class="font-medium text-slate-700 hover:underline">onlinegrowthhub.in</a>
-                    </span>
-                </footer>
             </main>
 
-            <!-- 2. MOBILE BOTTOM BAR (< 1024px) -->
-            <nav class="lg:hidden fixed bottom-0 left-0 right-0 h-14 bg-white border-t border-slate-200 flex items-center justify-around px-1 z-40 shadow-xs">
-                <a href="index.html" class="flex flex-col items-center justify-center flex-1 h-full min-h-[44px] transition-colors text-[#008069] font-bold">
-                    <i data-lucide="layout-grid" class="w-5 h-5 stroke-[2.5]"></i>
-                    <span class="text-[11px] font-semibold tracking-tight mt-0.5">Dashboard</span>
-                </a>
-                <a href="records.html" class="flex flex-col items-center justify-center flex-1 h-full min-h-[44px] transition-colors text-slate-500 hover:text-slate-900">
-                    <i data-lucide="folder-kanban" class="w-5 h-5 stroke-[1.75]"></i>
-                    <span class="text-[11px] font-semibold tracking-tight mt-0.5">Records</span>
-                </a>
-                <button type="button" id="btn-bottom-more" class="flex flex-col items-center justify-center flex-1 h-full min-h-[44px] transition-colors text-slate-500 hover:text-slate-900">
-                    <i data-lucide="menu" class="w-5 h-5 stroke-[1.75]"></i>
-                    <span class="text-[11px] font-semibold tracking-tight mt-0.5">More</span>
-                </button>
-            </nav>
-
-        </div>
-    </div>
-
-    <!-- 3. MOBILE NAVIGATION DRAWER (Slides from Left) -->
-    <div id="mobile-sidebar-backdrop" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 hidden opacity-0 transition-opacity duration-200">
-        <div id="mobile-sidebar-panel" class="fixed inset-y-0 left-0 w-72 bg-white border-r border-slate-200 flex flex-col z-50 -translate-x-full transition-transform duration-250 shadow-2xl">
-            
-            <div class="h-16 flex items-center justify-between px-4 border-b border-slate-100">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-[#25D366] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
-                        N
-                    </div>
-                    <div>
-                        <span class="font-extrabold text-sm text-slate-900 block leading-tight">NexusDash</span>
-                        <span class="text-[10px] text-slate-400 block font-medium">By Online Growth Hub</span>
-                    </div>
+            <!-- FOOTER -->
+            <footer class="app-footer">
+                <div>
+                    <span>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</span>
                 </div>
-                <button id="btn-close-mobile-sidebar" class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition-colors">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
+                <div class="footer-links">
+                    <a href="#">Documentation</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Support</a>
+                </div>
+            </footer>
 
-            <div class="flex-1 overflow-y-auto p-3 space-y-1">
-                <div class="px-2 pt-2 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Main Menu</div>
-                <a href="index.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors min-h-[44px] bg-[#25D366] text-white shadow-xs">
-                    <div class="flex items-center gap-3 min-w-0">
-                        <i data-lucide="layout-grid" class="w-4 h-4 shrink-0 text-white"></i>
-                        <span class="truncate">Dashboard</span>
-                    </div>
-                </a>
-                <a href="records.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors min-h-[44px] text-slate-700 hover:bg-slate-100 hover:text-slate-900">
-                    <div class="flex items-center gap-3 min-w-0">
-                        <i data-lucide="folder-kanban" class="w-4 h-4 shrink-0 text-slate-500"></i>
-                        <span class="truncate">Projects & Records</span>
-                    </div>
-                </a>
-            </div>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="assets/js/nexus.js"></script>
+    <!-- Application Script Architecture -->
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

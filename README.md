@@ -1,64 +1,160 @@
-# ⚡ NexusDash — Reusable Production HTML5 Admin Dashboard Template
+# Nexus Dash
 
-[![Engineered by Online Growth Hub](https://img.shields.io/badge/Engineered%20By-Online%20Growth%20Hub-blue?style=for-the-badge)](https://onlinegrowthhub.in)
-[![Direct Contact](https://img.shields.io/badge/WhatsApp%20%2F%20Call-%2B91%209032666855-25D366?style=for-the-badge&logo=whatsapp)](https://wa.me/919032666855?text=Hi%20Online%20Growth%20Hub,%20I%20am%20interested%20in%20custom%20software%20and%20web%20development.)
-[![License](https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge)](#)
+A clean, modular, and lightweight static admin dashboard template built with pure HTML5, modern CSS3, and vanilla JavaScript. 
 
-> **NexusDash** is a modern, high-trust, responsive **HTML5 Admin Dashboard Template** designed for instant replication across any project (PHP, Laravel, Node.js, Python, or static sites). Zero backend gates, zero build tools, pure static HTML5 with Tailwind CSS and Lucide icons.
+Nexus Dash provides a solid, accessible, and responsive foundation for web applications, SaaS backends, internal tools, and developer prototypes—with zero build steps, zero npm packages, and zero framework overhead.
 
 ---
 
-## 💼 Need Custom Software, Web Apps, or Client Portals?
-If you want a custom production web application, payment integrations, or enterprise CRM built by professionals:
+## Features
 
-* **Official Website:** [onlinegrowthhub.in](https://onlinegrowthhub.in)
-* **Direct Call / WhatsApp:** **[+91 9032666855](https://wa.me/919032666855?text=Hello%20Online%20Growth%20Hub,%20I%20want%20to%20hire%20you%20for%20a%20project)**
-* **Location:** India (Serving Global & Domestic Clients)
-
----
-
-## 🌟 Key Features
-
-* **⚡ Pure Static HTML5 (Zero Dependencies):** Just double-click `index.html` to open in any browser. No PHP, Node.js, database, or login setup required.
-* **🎨 Clean WACRM Design Consistency:** Pure white sidebar, signature `#25D366` green active pills, `#f5f8fc` canvas background, and crisp `border-slate-300` cards.
-* **📱 Dual-Mode Table Responsiveness:** 
-  - On Desktop (≥ 768px): Sticky header table with clean borders.
-  - On Mobile (< 768px): Automatically transforms into structured mobile cards with zero horizontal overflow or cut-off.
-* **📲 Mobile Bottom Navigation Bar:** Fixed bottom bar (< 1024px) with quick navigation and left slide-over drawer.
-* **🔔 Native Interactive Features:** Modal dialogs, user profile dropdowns, and toast notification alerts.
+- **Zero Build Step:** Runs directly in any modern browser. No webpack, vite, npm, or transpilation required.
+- **Pure Vanilla Stack:** Built exclusively with semantic HTML5, CSS custom properties (variables), and vanilla ES6 JavaScript.
+- **Responsive Layout System:**
+  - **Desktop (>= 1100px):** Fixed navigation sidebar, 6 KPI cards in a single row, dual-column charts.
+  - **Tablet (768px - 1099px):** 3-column KPI grid, stacked chart panels.
+  - **Mobile (< 768px):** Slide-in off-canvas navigation drawer with backdrop, 2-column KPI grid, touch-friendly interactive targets, and horizontally scrollable data tables.
+- **Dynamic Modular Configuration:**
+  - Site title, subtitle, status pills, and user profile configured in a single file (`config/site.js`).
+  - Navigation hierarchy and menu groups configured in `js/menu.js`.
+  - Metrics, chart series, action tiles, and sample data isolated in `data/mock.js`.
+- **Integrated CDN Visuals:**
+  - Modern icon set via **Lucide Icons**.
+  - Interactive line and donut charts via **Chart.js**.
 
 ---
 
-## 📂 Template Files
+## File Structure
 
 ```text
 nexus-dash/
-├── assets/
-│   ├── css/nexus.css        # Core styling & scrollbar polish
-│   └── js/nexus.js          # Mobile drawer, modal, and toast controllers
-├── index.html               # Main Dashboard Overview with KPI StatTiles & Activity Table
-├── records.html             # Projects & Records DataTable with search, filters & modal form
-├── .gitignore               # Clean Git rules
-└── README.md                # Documentation & client acquisition pitch
+├── config/
+│   └── site.js          # App branding, user info, and status settings
+├── css/
+│   └── styles.css       # Complete layout, design rules, variables & responsive rules
+├── data/
+│   └── mock.js          # KPI metrics, chart datasets, quick actions & table rows
+├── js/
+│   ├── app.js           # DOM controller, mobile drawer, dropdowns & event handlers
+│   ├── charts.js        # Chart.js initialization and dynamic range filtering
+│   └── menu.js          # Sidebar navigation data structure and dynamic renderer
+├── .env.example         # Optional environment configuration template
+├── .gitignore           # Git ignore rules for clean repository management
+├── index.html           # Main semantic dashboard view
+├── LICENSE              # MIT License
+└── README.md            # Documentation and usage guide
 ```
 
 ---
 
-## 🚀 How to Use / Replicate for Any Project
+## Getting Started
 
-1. **Clone or Download:**
-   ```bash
-   git clone https://github.com/infoonlinegrowthhub/nexus-dash.git
-   ```
-2. **Open in Browser:**  
-   Open `index.html` directly in Chrome, Edge, or Brave.
-3. **Replicate for New Projects:**  
-   Copy the `assets/` folder and `index.html` into your new Laravel Blade, PHP, React, or Python project to instantly get an enterprise-grade admin UI!
+### 1. Run Locally
+Because Nexus Dash uses pure static files, you can run it immediately:
+- **Directly:** Double-click `index.html` to open it in your browser.
+- **Via Local Server (Optional):**
+  ```bash
+  # Python 3
+  python -m http.server 8000
+
+  # Node.js (npx)
+  npx serve .
+  ```
+  Then navigate to `http://127.0.0.1:8000` in your web browser.
 
 ---
 
-## 📞 Hire Online Growth Hub
+## Customization Guide
 
-Need a dedicated development team for your next big idea?
-* **Website:** [https://onlinegrowthhub.in](https://onlinegrowthhub.in)
-* **Phone / WhatsApp:** [+91 9032666855](https://wa.me/919032666855)
+### 1. Changing Brand Name and User Profile
+Open `config/site.js` and modify the values in `SiteConfig`:
+
+```javascript
+const SiteConfig = {
+    appName: "Your App Name",
+    appSubtitle: "Management Console",
+    statusText: "Operational",
+    planText: "Enterprise",
+    currentUser: {
+        name: "Jane Doe",
+        initials: "JD",
+        role: "System Admin",
+        email: "jane.doe@example.com"
+    }
+};
+```
+The topbar, sidebar, page titles, and user profile cards update automatically.
+
+---
+
+### 2. Modifying Sidebar Menu Items
+Open `js/menu.js` to add, edit, or remove menu categories and links:
+
+```javascript
+const NavigationMenuConfig = [
+    {
+        groupTitle: "Overview",
+        items: [
+            { id: "nav-dashboard", label: "Dashboard", icon: "layout-grid", url: "index.html", active: true },
+            { id: "nav-analytics", label: "Analytics", icon: "bar-chart-2", url: "analytics.html", badge: null }
+        ]
+    },
+    // Add additional groups as needed
+];
+```
+
+*Note: For the `icon` field, use any icon name supported by [Lucide Icons](https://lucide.dev/icons).*
+
+---
+
+### 3. Customizing Colors & Theme
+All theme properties are defined as CSS variables at the top of `css/styles.css`:
+
+```css
+:root {
+    --color-bg: #f8fafc;
+    --color-surface: #ffffff;
+    --color-primary: #10b981;        /* Primary brand accent */
+    --color-primary-hover: #059669;
+    --color-text-main: #0f172a;
+    --radius-md: 10px;               /* Global border radius */
+}
+```
+Adjusting these values updates the theme uniformly across all components.
+
+---
+
+### 4. Updating Dashboard Metrics and Charts
+Open `data/mock.js`:
+- Edit `KpiMetricsData` to customize the 6 stat cards (label, value, trend percentage, icon).
+- Edit `ChartDataSets.activity` to update the 7-day, 30-day, and 90-day chart numbers.
+- Edit `QuickActionsData` to define custom action tiles.
+
+---
+
+### 5. Adding a New Page
+To create a new subpage (e.g., `customers.html`):
+1. Duplicate `index.html` and save it as `customers.html`.
+2. In `customers.html`, replace the `<main>` content section with your new view markup.
+3. In `js/menu.js`, set `active: true` for the corresponding menu item when loading that page.
+
+---
+
+## Pushing to GitHub
+
+To publish this project to your GitHub repository:
+
+```bash
+git init
+git add .
+git commit -m "feat: initial commit for Nexus Dash admin template"
+git branch -M main
+git remote add origin https://github.com/infoonlinegrowthhub/nexus-dash.git
+git push -u origin main
+```
+
+---
+
+## License
+
+This project is open-source and released under the [MIT License](LICENSE).

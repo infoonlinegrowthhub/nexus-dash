@@ -1,12 +1,29 @@
-# NexusDash - Git Ignore Rules
-# Engineered by Online Growth Hub (https://onlinegrowthhub.in | +91 9032666855)
+# Nexus Dash - Version Control Exclusions
 
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+vendor/
+
+# Operating System Files
 .DS_Store
 Thumbs.db
-*.log
-.env
-.env.local
-config/db_local.php
-uploads/*
-!uploads/.gitkeep
+desktop.ini
 
+# Editor & IDE Directories
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary and Log files
+*.log
+*.tmp
+*.bak
