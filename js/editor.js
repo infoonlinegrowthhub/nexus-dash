@@ -104,3 +104,4 @@ function initEditor(selector, options = {}) {
 
     return quill;
 }
+
