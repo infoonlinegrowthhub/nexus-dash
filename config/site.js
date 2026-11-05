@@ -7,7 +7,6 @@ const SiteConfig = {
     appName: "Nexus Dash",
     appSubtitle: "Admin Console",
     statusText: "System healthy",
-    planText: "Free plan",
     currentUser: {
         name: "Admin User",
         initials: "AU",

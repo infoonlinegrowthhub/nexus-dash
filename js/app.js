@@ -61,12 +61,9 @@ function populateSiteConfig() {
     document.querySelectorAll(".site-brand-title").forEach(el => el.textContent = SiteConfig.appName);
     document.querySelectorAll(".site-brand-subtitle").forEach(el => el.textContent = SiteConfig.appSubtitle);
 
-    // Status & Plan Pills
+    // Status Pill
     const statusTextEl = document.getElementById("topbar-status-text");
     if (statusTextEl) statusTextEl.textContent = SiteConfig.statusText;
-
-    const planTextEl = document.getElementById("topbar-plan-text");
-    if (planTextEl) planTextEl.textContent = SiteConfig.planText;
 
     // User details
     const userNameEl = document.getElementById("topbar-user-name");
