@@ -1,13 +1,13 @@
 <?php
 /**
- * NexusDash - Main Analytics Dashboard
+ * NexusDash - Main Dashboard (100% WACRM Design System & Consistency)
  * 
  * Engineered by: Online Growth Hub
  * Website: https://onlinegrowthhub.in
  * Contact / WhatsApp: +91 9032666855
  */
 
-$page_title = 'Analytics & Overview';
+$page_title = 'Dashboard Overview';
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/header.php';
 
@@ -22,7 +22,6 @@ if ($db_connected && $pdo) {
     }
 }
 
-// Fallback dummy records if DB not connected yet
 if (empty($recent_records)) {
     $recent_records = [
         ['id' => 1, 'title' => 'E-commerce Multi-Vendor Portal', 'client_name' => 'Rahul Sharma', 'category' => 'Web Application', 'budget' => 45000, 'status' => 'active'],
@@ -34,170 +33,176 @@ if (empty($recent_records)) {
 }
 ?>
 
-<!-- Welcome Banner with Action Buttons -->
-<div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-    <div>
-        <h1 class="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
-            <span>Welcome back, <?php echo htmlspecialchars($current_user['name']); ?></span>
-            <span class="text-xl">👋</span>
+<!-- WACRM Page Header Component -->
+<div class="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-slate-200 mb-6">
+    <div class="min-w-0 flex-1">
+        <h1 class="text-lg sm:text-2xl font-bold tracking-tight text-slate-900 truncate">
+            Dashboard Overview
         </h1>
-        <p class="text-sm text-slate-500 mt-1">
-            Overview of your application metrics, records, and performance.
+        <p class="text-xs sm:text-sm font-normal text-slate-500 mt-0.5 sm:mt-1 truncate">
+            Real-time pipeline metrics, project records, and activity summary.
         </p>
     </div>
-    <div class="flex items-center gap-3">
+
+    <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
         <a href="records.php" 
-           class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm transition">
-            <i data-lucide="plus-circle" class="w-4 h-4"></i>
-            <span>New Record</span>
-        </a>
-    </div>
-</div>
-            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+           class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-xs sm:text-sm font-semibold transition-colors bg-emerald-700 text-white hover:bg-emerald-800 shadow-xs px-3.5 sm:px-4 py-2 min-h-[38px] sm:min-h-[42px] cursor-pointer">
+            <i data-lucide="plus" class="w-4 h-4"></i>
             <span>New Record</span>
         </a>
     </div>
 </div>
 
-<!-- 4 Modern Stat Cards (WACRM Style) -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+<!-- WACRM StatTile Grid (2 cols mobile, 4 cols desktop) -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
     
     <!-- Stat 1: Revenue -->
-    <div class="nexus-card p-5">
-        <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Revenue</span>
-            <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                <i data-lucide="indian-rupee" class="w-4 h-4"></i>
+    <div class="rounded-xl border border-slate-300 bg-white p-3.5 sm:p-5 text-slate-900 shadow-xs flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between gap-1.5 sm:gap-2">
+            <span class="text-xs font-medium text-slate-500 leading-tight truncate min-w-0">Total Revenue</span>
+            <i data-lucide="indian-rupee" class="w-4 h-4 text-slate-400 shrink-0"></i>
+        </div>
+        <div class="space-y-1">
+            <div class="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900">₹2,50,000</div>
+            <div class="text-xs font-normal text-emerald-700 truncate leading-normal flex items-center gap-1">
+                <i data-lucide="trending-up" class="w-3 h-3"></i>
+                <span>+14.2% this month</span>
             </div>
         </div>
-        <div class="flex items-baseline justify-between">
-            <span class="text-2xl font-extrabold text-slate-900 tracking-tight">₹2,50,000</span>
-            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
-                <i data-lucide="trending-up" class="w-3 h-3"></i>
-                +14.2%
-            </span>
-        </div>
-        <p class="text-xs text-slate-400 mt-2 font-medium">Compared to last month</p>
     </div>
 
     <!-- Stat 2: Active Projects -->
-    <div class="nexus-card p-5">
-        <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Active Projects</span>
-            <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                <i data-lucide="folder-kanban" class="w-4 h-4"></i>
-            </div>
+    <div class="rounded-xl border border-slate-300 bg-white p-3.5 sm:p-5 text-slate-900 shadow-xs flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between gap-1.5 sm:gap-2">
+            <span class="text-xs font-medium text-slate-500 leading-tight truncate min-w-0">Active Deals</span>
+            <i data-lucide="folder-kanban" class="w-4 h-4 text-slate-400 shrink-0"></i>
         </div>
-        <div class="flex items-baseline justify-between">
-            <span class="text-2xl font-extrabold text-slate-900 tracking-tight">12 Active</span>
-            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
-                4 Pending
-            </span>
+        <div class="space-y-1">
+            <div class="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900">12 Deals</div>
+            <div class="text-xs font-normal text-slate-500 truncate leading-normal">4 in active funnel</div>
         </div>
-        <p class="text-xs text-slate-400 mt-2 font-medium">Across all client pipelines</p>
     </div>
 
     <!-- Stat 3: Total Clients -->
-    <div class="nexus-card p-5">
-        <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Clients</span>
-            <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                <i data-lucide="users" class="w-4 h-4"></i>
-            </div>
+    <div class="rounded-xl border border-slate-300 bg-white p-3.5 sm:p-5 text-slate-900 shadow-xs flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between gap-1.5 sm:gap-2">
+            <span class="text-xs font-medium text-slate-500 leading-tight truncate min-w-0">Total Clients</span>
+            <i data-lucide="users" class="w-4 h-4 text-slate-400 shrink-0"></i>
         </div>
-        <div class="flex items-baseline justify-between">
-            <span class="text-2xl font-extrabold text-slate-900 tracking-tight">48 Accounts</span>
-            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">
-                +8 New
-            </span>
+        <div class="space-y-1">
+            <div class="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900">48 Accounts</div>
+            <div class="text-xs font-normal text-slate-500 truncate leading-normal">+8 new acquired</div>
         </div>
-        <p class="text-xs text-slate-400 mt-2 font-medium">Active customer database</p>
     </div>
 
     <!-- Stat 4: System Uptime -->
-    <div class="nexus-card p-5">
-        <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Hostinger Cloud</span>
-            <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-                <i data-lucide="zap" class="w-4 h-4"></i>
+    <div class="rounded-xl border border-slate-300 bg-white p-3.5 sm:p-5 text-slate-900 shadow-xs flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between gap-1.5 sm:gap-2">
+            <span class="text-xs font-medium text-slate-500 leading-tight truncate min-w-0">System Status</span>
+            <i data-lucide="activity" class="w-4 h-4 text-slate-400 shrink-0"></i>
+        </div>
+        <div class="space-y-1">
+            <div class="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900">99.98%</div>
+            <div class="text-xs font-normal text-emerald-700 truncate leading-normal flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-[#25D366]"></span>
+                <span>Hostinger Cloud Online</span>
             </div>
         </div>
-        <div class="flex items-baseline justify-between">
-            <span class="text-2xl font-extrabold text-slate-900 tracking-tight">99.98%</span>
-            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
-                Operational
-            </span>
-        </div>
-        <p class="text-xs text-slate-400 mt-2 font-medium">High performance verified</p>
     </div>
 
 </div>
 
-<!-- Recent Records / Table Showcase -->
-<div class="nexus-card overflow-hidden mb-8">
-    <div class="p-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-            <h3 class="text-base font-bold text-slate-900">Recent Projects & Deployments</h3>
-            <p class="text-xs text-slate-500 mt-0.5">Real-time status of your projects and client deliverables.</p>
-        </div>
-        <a href="records.php" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700">
-            <span>View All Records</span>
-            <i data-lucide="chevron-right" class="w-4 h-4"></i>
-        </a>
+<!-- Recent Records Header -->
+<div class="flex items-center justify-between mb-3">
+    <div>
+        <h2 class="text-base font-semibold text-slate-900">Recent Projects & Activity</h2>
+        <p class="text-xs text-slate-500">Latest business records in your pipeline.</p>
     </div>
+    <a href="records.php" class="text-xs font-semibold text-[#008069] hover:underline flex items-center gap-1">
+        <span>View all records</span>
+        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+    </a>
+</div>
 
-    <div class="overflow-x-auto">
-        <table class="w-full text-left nexus-table">
-            <thead>
-                <tr>
-                    <th class="py-3 px-5">Project Title</th>
-                    <th class="py-3 px-5">Client Name</th>
-                    <th class="py-3 px-5">Category</th>
-                    <th class="py-3 px-5">Budget</th>
-                    <th class="py-3 px-5">Status</th>
-                    <th class="py-3 px-5 text-right">Actions</th>
+<!-- DUAL-MODE TABLE RESPONSIVENESS (100% WACRM Table.jsx Standard) -->
+
+<!-- 1. DESKTOP VIEW (>= 768px): Sticky Header Table with Crisp Borders -->
+<div class="hidden md:block overflow-x-auto rounded-xl border border-slate-300 bg-white shadow-xs">
+    <table class="w-full caption-bottom text-sm text-left border-collapse">
+        <thead class="bg-slate-100 border-b border-slate-300 sticky top-0 z-10">
+            <tr>
+                <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap">Project Title</th>
+                <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap">Client Name</th>
+                <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap">Category</th>
+                <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap">Budget</th>
+                <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap">Status</th>
+                <th class="h-11 px-4 text-xs font-semibold text-slate-700 whitespace-nowrap text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white">
+            <?php foreach ($recent_records as $rec): 
+                $status_badges = [
+                    'active'    => 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                    'completed' => 'bg-blue-50 text-blue-700 border-blue-200',
+                    'pending'   => 'bg-amber-50 text-amber-800 border-amber-200',
+                    'cancelled' => 'bg-red-50 text-red-700 border-red-200',
+                ];
+                $badge_class = $status_badges[$rec['status']] ?? 'bg-slate-50 text-slate-700 border-slate-200';
+            ?>
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="p-4 align-middle font-bold text-slate-900 text-sm">
+                        <?php echo htmlspecialchars($rec['title']); ?>
+                    </td>
+                    <td class="p-4 align-middle text-slate-600 text-sm">
+                        <?php echo htmlspecialchars($rec['client_name']); ?>
+                    </td>
+                    <td class="p-4 align-middle text-slate-500 text-xs">
+                        <?php echo htmlspecialchars($rec['category']); ?>
+                    </td>
+                    <td class="p-4 align-middle font-semibold text-slate-900 text-sm">
+                        ₹<?php echo number_format($rec['budget']); ?>
+                    </td>
+                    <td class="p-4 align-middle">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border <?php echo $badge_class; ?>">
+                            <?php echo ucfirst($rec['status']); ?>
+                        </span>
+                    </td>
+                    <td class="p-4 align-middle text-right">
+                        <a href="records.php" class="p-1.5 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-lg inline-flex items-center justify-center transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100">
-                <?php foreach ($recent_records as $rec): 
-                    $status_classes = [
-                        'active'    => 'bg-blue-50 text-blue-700 border-blue-200',
-                        'completed' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
-                        'pending'   => 'bg-amber-50 text-amber-700 border-amber-200',
-                        'cancelled' => 'bg-rose-50 text-rose-700 border-rose-200',
-                    ];
-                    $badge_class = $status_classes[$rec['status']] ?? 'bg-slate-50 text-slate-700 border-slate-200';
-                ?>
-                    <tr>
-                        <td class="py-3.5 px-5 font-bold text-slate-800">
-                            <?php echo htmlspecialchars($rec['title']); ?>
-                        </td>
-                        <td class="py-3.5 px-5 font-medium text-slate-600">
-                            <?php echo htmlspecialchars($rec['client_name']); ?>
-                        </td>
-                        <td class="py-3.5 px-5 text-xs text-slate-500">
-                            <?php echo htmlspecialchars($rec['category']); ?>
-                        </td>
-                        <td class="py-3.5 px-5 font-bold text-slate-800">
-                            ₹<?php echo number_format($rec['budget']); ?>
-                        </td>
-                        <td class="py-3.5 px-5">
-                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold border <?php echo $badge_class; ?>">
-                                <?php echo ucfirst($rec['status']); ?>
-                            </span>
-                        </td>
-                        <td class="py-3.5 px-5 text-right">
-                            <button onclick="showNexusToast('Viewing record: <?php echo htmlspecialchars($rec['title']); ?>', 'success')" 
-                                    class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition">
-                                <i data-lucide="eye" class="w-4 h-4"></i>
-                            </button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<!-- 2. MOBILE VIEW (< 768px): Card Per Row (Zero Cut-Off, Zero Horizontal Overflow) -->
+<div class="md:hidden space-y-3">
+    <?php foreach ($recent_records as $rec): 
+        $status_badges = [
+            'active'    => 'bg-emerald-50 text-emerald-700 border-emerald-200',
+            'completed' => 'bg-blue-50 text-blue-700 border-blue-200',
+            'pending'   => 'bg-amber-50 text-amber-800 border-amber-200',
+            'cancelled' => 'bg-red-50 text-red-700 border-red-200',
+        ];
+        $badge_class = $status_badges[$rec['status']] ?? 'bg-slate-50 text-slate-700 border-slate-200';
+    ?>
+        <div class="rounded-xl border border-slate-300 bg-white p-4 shadow-xs space-y-2.5 text-sm">
+            <div class="flex items-start justify-between gap-2">
+                <span class="font-bold text-slate-900 leading-snug"><?php echo htmlspecialchars($rec['title']); ?></span>
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold border shrink-0 <?php echo $badge_class; ?>">
+                    <?php echo ucfirst($rec['status']); ?>
+                </span>
+            </div>
+            
+            <div class="text-xs text-slate-500 flex items-center justify-between border-t border-slate-100 pt-2">
+                <span>Client: <strong class="text-slate-800"><?php echo htmlspecialchars($rec['client_name']); ?></strong></span>
+                <span class="font-bold text-slate-900 text-sm">₹<?php echo number_format($rec['budget']); ?></span>
+            </div>
+        </div>
+    <?php endforeach; ?>
 </div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
-

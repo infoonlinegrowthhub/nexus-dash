@@ -1,6 +1,6 @@
 <?php
 /**
- * NexusDash - Sidebar Navigation (Desktop & Mobile Drawer)
+ * NexusDash - Sidebar Navigation (100% WACRM Design System)
  * 
  * Engineered by: Online Growth Hub
  * Website: https://onlinegrowthhub.in
@@ -9,100 +9,71 @@
 
 $nav_items = getNexusNavItems();
 $current_page = basename($_SERVER['PHP_SELF']);
+$user = currentUser();
 ?>
 
-<!-- 1. DESKTOP STATIC SIDEBAR (Hidden on mobile) -->
-<aside class="hidden lg:flex lg:flex-col w-64 nexus-sidebar flex-shrink-0 z-30 select-none">
+<!-- 1. DESKTOP SIDEBAR (>= 1024px, hidden on mobile/tablet) -->
+<aside class="hidden lg:flex w-64 bg-white border-r border-slate-200/90 flex-col shrink-0 h-full overflow-hidden z-30 select-none shadow-xs">
     
     <!-- Brand Header -->
-    <div class="h-16 flex items-center justify-between px-6 border-b border-slate-800/80">
-        <a href="index.php" class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 font-bold text-lg">
+    <div class="h-16 flex items-center justify-between px-4 border-b border-slate-200/90 shrink-0">
+        <a href="index.php" class="flex items-center gap-2.5 min-w-0">
+            <div class="w-8 h-8 rounded-lg bg-[#25D366] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
                 N
             </div>
-            <div>
-                <span class="text-white font-bold tracking-tight text-base"><?php echo APP_NAME; ?></span>
-                <span class="block text-[10px] text-slate-400 font-medium tracking-wide">by <?php echo AGENCY_NAME; ?></span>
+            <div class="min-w-0">
+                <span class="font-extrabold text-sm tracking-tight text-slate-900 block leading-tight truncate"><?php echo APP_NAME; ?></span>
+                <span class="text-[10px] font-medium text-slate-400 block leading-tight truncate">By <?php echo AGENCY_NAME; ?></span>
             </div>
         </a>
     </div>
 
-    <!-- Navigation Menu Items -->
-    <div class="flex-1 overflow-y-auto px-4 py-5 space-y-1">
+    <!-- Navigation Menu Items - Compact Density -->
+    <nav class="flex-1 px-2.5 py-2 space-y-0.5 overflow-y-auto sidebar-scroll scroll-smooth">
         <?php foreach ($nav_items as $item): ?>
             <?php if (isset($item['section'])): ?>
-                <div class="pt-4 pb-1.5 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                <div class="px-2 pt-3 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                     <?php echo htmlspecialchars($item['section']); ?>
                 </div>
             <?php else: 
                 $is_active = ($current_page === $item['url']);
             ?>
                 <a href="<?php echo htmlspecialchars($item['url']); ?>" 
-                   class="nexus-nav-link <?php echo $is_active ? 'active' : ''; ?>">
-                    <i data-lucide="<?php echo htmlspecialchars($item['icon']); ?>" class="w-5 h-5 flex-shrink-0"></i>
-                    <span class="flex-1 truncate"><?php echo htmlspecialchars($item['title']); ?></span>
+                   class="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all min-h-[32px] <?php echo $is_active ? 'bg-[#25D366] text-white font-semibold shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 font-medium'; ?>">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <i data-lucide="<?php echo htmlspecialchars($item['icon']); ?>" class="w-3.5 h-3.5 shrink-0 <?php echo $is_active ? 'text-white' : 'text-slate-400'; ?>"></i>
+                        <span class="truncate"><?php echo htmlspecialchars($item['title']); ?></span>
+                    </div>
                     <?php if (!empty($item['badge'])): ?>
-                        <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                        <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold <?php echo $is_active ? 'bg-white text-[#25D366]' : 'bg-red-500 text-white'; ?>">
                             <?php echo htmlspecialchars($item['badge']); ?>
                         </span>
                     <?php endif; ?>
                 </a>
             <?php endif; ?>
         <?php endforeach; ?>
-    </div>
+    </nav>
 
-    <!-- Sidebar Version Footer -->
-    <div class="p-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-        <span class="font-medium text-slate-300"><?php echo APP_NAME; ?></span>
-        <span class="text-[10px] bg-slate-800/80 px-2 py-0.5 rounded text-slate-400 font-mono">v<?php echo APP_VERSION; ?></span>
+    <!-- Bottom User Account Tile -->
+    <div class="p-2.5 border-t border-slate-100 shrink-0 bg-white">
+        <div class="flex items-center justify-between p-1.5 rounded-xl bg-slate-50 border border-slate-200/70 gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+                <div class="w-7 h-7 rounded-lg bg-teal-700 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                    <?php echo strtoupper(substr($user['name'] ?? 'AD', 0, 2)); ?>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="text-xs font-bold text-slate-900 truncate leading-tight"><?php echo htmlspecialchars($user['name'] ?? 'Admin User'); ?></p>
+                    <p class="text-[10px] font-semibold truncate leading-tight text-emerald-700">Online Growth Hub</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-0.5 shrink-0">
+                <a href="#" class="p-1 text-slate-400 hover:text-slate-800 hover:bg-slate-200/60 rounded-md transition-colors" title="Settings">
+                    <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+                </a>
+                <a href="logout.php" class="p-1 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors cursor-pointer" title="Log out">
+                    <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                </a>
+            </div>
+        </div>
     </div>
 </aside>
-
-
-<!-- 2. MOBILE SIDEBAR DRAWER (Slide-over) -->
-<div id="mobile-sidebar-backdrop" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity">
-    <div id="mobile-sidebar-panel" class="fixed inset-y-0 left-0 w-72 nexus-sidebar flex flex-col z-50 -translate-x-full transition-transform">
-        
-        <!-- Mobile Drawer Header -->
-        <div class="h-16 flex items-center justify-between px-6 border-b border-slate-800/80">
-            <a href="index.php" class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
-                    N
-                </div>
-                <div>
-                    <span class="text-white font-bold text-base"><?php echo APP_NAME; ?></span>
-                    <span class="block text-[10px] text-slate-400"><?php echo AGENCY_NAME; ?></span>
-                </div>
-            </a>
-            <button id="btn-close-mobile-sidebar" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-        </div>
-
-        <!-- Mobile Menu Items -->
-        <div class="flex-1 overflow-y-auto px-4 py-4 space-y-1">
-            <?php foreach ($nav_items as $item): ?>
-                <?php if (isset($item['section'])): ?>
-                    <div class="pt-4 pb-1 px-3 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-                        <?php echo htmlspecialchars($item['section']); ?>
-                    </div>
-                <?php else: 
-                    $is_active = ($current_page === $item['url']);
-                ?>
-                    <a href="<?php echo htmlspecialchars($item['url']); ?>" 
-                       class="nexus-nav-link <?php echo $is_active ? 'active' : ''; ?>">
-                        <i data-lucide="<?php echo htmlspecialchars($item['icon']); ?>" class="w-5 h-5"></i>
-                        <span class="flex-1 truncate"><?php echo htmlspecialchars($item['title']); ?></span>
-                    </a>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </div>
-
-        <!-- Mobile Drawer Footer -->
-        <div class="p-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-            <span class="font-medium text-slate-300"><?php echo APP_NAME; ?></span>
-            <span class="text-[10px] bg-slate-800/80 px-2 py-0.5 rounded text-slate-400 font-mono">v<?php echo APP_VERSION; ?></span>
-        </div>
-    </div>
-</div>
-

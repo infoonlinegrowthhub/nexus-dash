@@ -1,5 +1,5 @@
 /**
- * NexusDash Core JavaScript
+ * NexusDash Core JavaScript - 100% WACRM Interactions
  * Engineered by: Online Growth Hub (https://onlinegrowthhub.in | +91 9032666855)
  */
 
@@ -9,8 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
         lucide.createIcons();
     }
 
-    // 2. Mobile Sidebar Drawer Logic
+    // 2. WACRM Mobile Drawer Logic
     const mobileMenuBtn = document.getElementById('btn-mobile-menu');
+    const bottomMoreBtn = document.getElementById('btn-bottom-more');
     const mobileSidebarBackdrop = document.getElementById('mobile-sidebar-backdrop');
     const mobileSidebarPanel = document.getElementById('mobile-sidebar-panel');
     const mobileCloseBtn = document.getElementById('btn-close-mobile-sidebar');
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function openMobileSidebar() {
         if (mobileSidebarBackdrop && mobileSidebarPanel) {
             mobileSidebarBackdrop.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
             setTimeout(() => {
                 mobileSidebarBackdrop.classList.remove('opacity-0');
                 mobileSidebarPanel.classList.remove('-translate-x-full');
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (mobileSidebarBackdrop && mobileSidebarPanel) {
             mobileSidebarBackdrop.classList.add('opacity-0');
             mobileSidebarPanel.classList.add('-translate-x-full');
+            document.body.style.overflow = '';
             setTimeout(() => {
                 mobileSidebarBackdrop.classList.add('hidden');
             }, 250);
@@ -36,10 +39,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileSidebar);
+    if (bottomMoreBtn) bottomMoreBtn.addEventListener('click', openMobileSidebar);
     if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileSidebar);
-    if (mobileSidebarBackdrop) mobileSidebarBackdrop.addEventListener('click', function(e) {
-        if (e.target === mobileSidebarBackdrop) closeMobileSidebar();
-    });
+    if (mobileSidebarBackdrop) {
+        mobileSidebarBackdrop.addEventListener('click', function(e) {
+            if (e.target === mobileSidebarBackdrop) closeMobileSidebar();
+        });
+    }
 
     // 3. User Avatar Dropdown
     const userMenuBtn = document.getElementById('btn-user-menu');
@@ -64,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (modal) {
             modal.classList.remove('hidden');
             modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
             if (typeof lucide !== 'undefined') lucide.createIcons();
         }
     };
@@ -73,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (modal) {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
+            document.body.style.overflow = '';
         }
     };
 
@@ -82,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!container) {
             container = document.createElement('div');
             container.id = 'nexus-toast-container';
-            container.className = 'fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none';
+            container.className = 'fixed bottom-20 lg:bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none';
             document.body.appendChild(container);
         }
 
@@ -94,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }`;
 
         const iconName = type === 'success' ? 'check-circle' : 'alert-circle';
-        const iconColor = type === 'success' ? 'text-emerald-400' : 'text-rose-400';
+        const iconColor = type === 'success' ? 'text-[#25D366]' : 'text-rose-400';
 
         toast.innerHTML = `
             <i data-lucide="${iconName}" class="w-5 h-5 ${iconColor}"></i>
@@ -104,16 +112,13 @@ document.addEventListener('DOMContentLoaded', function () {
         container.appendChild(toast);
         if (typeof lucide !== 'undefined') lucide.createIcons();
 
-        // Animate In
         setTimeout(() => {
             toast.classList.remove('translate-y-2', 'opacity-0');
         }, 10);
 
-        // Auto Remove
         setTimeout(() => {
             toast.classList.add('opacity-0', 'translate-y-2');
             setTimeout(() => toast.remove(), 300);
         }, 3500);
     };
 });
-

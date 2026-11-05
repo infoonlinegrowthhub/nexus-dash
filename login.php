@@ -1,6 +1,6 @@
 <?php
 /**
- * NexusDash - Authentication / Sign In
+ * NexusDash - Authentication / Sign In (100% WACRM Design System)
  * 
  * Engineered by: Online Growth Hub
  * Website: https://onlinegrowthhub.in
@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $authenticated = false;
         $user_data = null;
 
-        // 1. Try DB validation if connected
         if ($db_connected && $pdo) {
             try {
                 $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? LIMIT 1");
@@ -40,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // 2. Demo Fallback authentication
         if (!$authenticated && $email === 'admin@onlinegrowthhub.in' && $password === 'admin123') {
             $authenticated = true;
             $user_data = [
@@ -64,34 +62,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-950">
+<html lang="en" class="h-full bg-[#f5f8fc]">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sign In - <?php echo APP_NAME; ?> | <?php echo AGENCY_NAME; ?></title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="assets/css/nexus.css">
 </head>
-<body class="h-full flex items-center justify-center p-4 bg-gradient-to-tr from-slate-950 via-slate-900 to-blue-950 text-slate-100 font-sans antialiased">
+<body class="h-full flex items-center justify-center p-4 bg-[#f5f8fc] text-slate-900 font-sans antialiased">
 
     <div class="w-full max-w-md">
         
-        <!-- Brand Header -->
-        <div class="text-center mb-8">
-            <div class="inline-flex w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 items-center justify-center text-white font-extrabold text-2xl shadow-xl shadow-blue-500/25 mb-3">
+        <!-- Brand Header (WACRM Style) -->
+        <div class="text-center mb-6">
+            <div class="inline-flex w-12 h-12 rounded-xl bg-[#25D366] items-center justify-center text-white font-extrabold text-2xl shadow-xs mb-3">
                 N
             </div>
-            <h1 class="text-2xl font-bold tracking-tight text-white"><?php echo APP_NAME; ?></h1>
-            <p class="text-xs text-slate-400 mt-1">Enterprise Application Core by <a href="<?php echo AGENCY_WEBSITE; ?>" target="_blank" class="text-blue-400 hover:underline"><?php echo AGENCY_NAME; ?></a></p>
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900"><?php echo APP_NAME; ?></h1>
+            <p class="text-xs text-slate-500 mt-1">Application Foundation by <a href="<?php echo AGENCY_WEBSITE; ?>" target="_blank" class="font-semibold text-slate-800 hover:underline"><?php echo AGENCY_NAME; ?></a></p>
         </div>
 
         <!-- Login Card -->
-        <div class="bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl p-7 shadow-2xl">
+        <div class="bg-white border border-slate-300 rounded-2xl p-6 sm:p-8 shadow-sm">
             
             <?php if ($error): ?>
-                <div class="mb-5 p-3 rounded-xl bg-rose-500/10 border border-rose-500/25 text-rose-300 text-xs flex items-center gap-2">
+                <div class="mb-5 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
                     <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0"></i>
                     <span><?php echo htmlspecialchars($error); ?></span>
                 </div>
@@ -99,29 +97,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <form method="POST" action="login.php" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Email Address</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Email Address</label>
                     <div class="relative">
-                        <i data-lucide="mail" class="w-4 h-4 absolute left-3 top-3 text-slate-500"></i>
+                        <i data-lucide="mail" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
                         <input type="email" name="email" required value="admin@onlinegrowthhub.in" 
-                               class="w-full pl-9 pr-3 py-2 text-xs bg-slate-950/80 border border-slate-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition">
+                               class="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#25D366] transition">
                     </div>
                 </div>
 
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
-                        <label class="text-xs font-semibold text-slate-300">Password</label>
-                        <a href="#" class="text-[11px] text-blue-400 hover:underline">Forgot?</a>
+                        <label class="text-xs font-bold text-slate-700">Password</label>
+                        <a href="#" class="text-[11px] text-[#008069] font-medium hover:underline">Forgot?</a>
                     </div>
                     <div class="relative">
-                        <i data-lucide="lock" class="w-4 h-4 absolute left-3 top-3 text-slate-500"></i>
+                        <i data-lucide="lock" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
                         <input type="password" name="password" required value="admin123" 
-                               class="w-full pl-9 pr-3 py-2 text-xs bg-slate-950/80 border border-slate-800 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition">
+                               class="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 border border-slate-300 rounded-xl text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#25D366] transition">
                     </div>
                 </div>
 
                 <div class="pt-2">
                     <button type="submit" 
-                            class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2">
+                            class="w-full py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow-xs transition flex items-center justify-center gap-2 cursor-pointer">
                         <span>Sign In to Dashboard</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
@@ -129,25 +127,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
 
             <!-- Demo Helper Box -->
-            <div class="mt-6 pt-5 border-t border-slate-800/80 text-center">
-                <p class="text-[11px] text-slate-400">
-                    Default Demo Access: <code class="px-1.5 py-0.5 rounded bg-slate-800 text-blue-300 font-mono text-[10px]">admin@onlinegrowthhub.in</code> / <code class="px-1.5 py-0.5 rounded bg-slate-800 text-blue-300 font-mono text-[10px]">admin123</code>
+            <div class="mt-6 pt-5 border-t border-slate-200 text-center">
+                <p class="text-[11px] text-slate-500">
+                    Default Demo Access: <code class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-800 font-mono text-[10px]">admin@onlinegrowthhub.in</code> / <code class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-800 font-mono text-[10px]">admin123</code>
                 </p>
             </div>
         </div>
 
-        <!-- Clean Agency Footer -->
-        <div class="mt-8 text-center text-xs text-slate-400">
-            <p><?php echo APP_NAME; ?> v<?php echo APP_VERSION; ?> • Engineered by <a href="<?php echo AGENCY_WEBSITE; ?>" target="_blank" class="text-blue-400 hover:underline"><?php echo AGENCY_NAME; ?></a></p>
+        <!-- Agency Footer -->
+        <div class="mt-6 text-center text-xs text-slate-500">
+            <p><?php echo APP_NAME; ?> v<?php echo APP_VERSION; ?> • Engineered by <a href="<?php echo AGENCY_WEBSITE; ?>" target="_blank" class="font-semibold text-slate-700 hover:underline"><?php echo AGENCY_NAME; ?></a></p>
             <div class="mt-2 flex items-center justify-center gap-2">
                 <span>Hire Us for Custom Development:</span>
-                <a href="<?php echo AGENCY_WHATSAPP_URL; ?>" target="_blank" 
-                   class="font-bold text-emerald-400 hover:text-emerald-300 transition">
+                <a href="<?php echo AGENCY_WHATSAPP_URL; ?>" target="_blank" class="font-bold text-emerald-700 hover:text-emerald-800 transition">
                     <?php echo AGENCY_PHONE; ?>
                 </a>
                 <span>•</span>
-                <a href="<?php echo AGENCY_WEBSITE; ?>" target="_blank" 
-                   class="text-slate-300 hover:text-white transition">
+                <a href="<?php echo AGENCY_WEBSITE; ?>" target="_blank" class="text-slate-600 hover:underline">
                     onlinegrowthhub.in
                 </a>
             </div>
@@ -160,4 +156,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </body>
 </html>
-
