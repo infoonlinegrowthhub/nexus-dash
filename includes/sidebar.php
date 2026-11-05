@@ -51,30 +51,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <?php endforeach; ?>
     </div>
 
-    <!-- Agency Promo Card (Client Acquisition Widget) -->
-    <div class="p-4 border-t border-slate-800/80">
-        <div class="agency-promo-card">
-            <div class="flex items-center gap-2 mb-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-[11px] font-bold uppercase tracking-wider text-blue-400">Custom Dev Available</span>
-            </div>
-            <h4 class="text-xs font-bold text-white mb-1">Need Custom Features?</h4>
-            <p class="text-[11px] text-slate-300 leading-snug mb-3">
-                Hire <strong><?php echo AGENCY_NAME; ?></strong> to build production ERP, CRM, or Web Apps.
-            </p>
-            <div class="flex flex-col gap-1.5">
-                <a href="<?php echo AGENCY_WHATSAPP_URL; ?>" target="_blank" 
-                   class="inline-flex items-center justify-center gap-1.5 w-full py-1.5 px-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-semibold transition-colors shadow-sm">
-                    <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
-                    <span>WhatsApp: <?php echo AGENCY_PHONE_RAW; ?></span>
-                </a>
-                <a href="<?php echo AGENCY_WEBSITE; ?>" target="_blank" 
-                   class="inline-flex items-center justify-center gap-1 w-full py-1 px-2 rounded-lg text-slate-400 hover:text-white text-[10px] font-medium transition-colors">
-                    <i data-lucide="globe" class="w-3 h-3"></i>
-                    <span>onlinegrowthhub.in</span>
-                </a>
-            </div>
-        </div>
+    <!-- Sidebar Version Footer -->
+    <div class="p-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+        <span class="font-medium text-slate-300"><?php echo APP_NAME; ?></span>
+        <span class="text-[10px] bg-slate-800/80 px-2 py-0.5 rounded text-slate-400 font-mono">v<?php echo APP_VERSION; ?></span>
     </div>
 </aside>
 
@@ -118,13 +98,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <?php endforeach; ?>
         </div>
 
-        <!-- Mobile Drawer Promo -->
-        <div class="p-4 border-t border-slate-800/80">
-            <a href="<?php echo AGENCY_WHATSAPP_URL; ?>" target="_blank" 
-               class="flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-emerald-600 text-white text-xs font-semibold">
-                <i data-lucide="message-square" class="w-4 h-4"></i>
-                <span>Call/WhatsApp: <?php echo AGENCY_PHONE_RAW; ?></span>
-            </a>
+        <!-- Mobile Drawer Footer -->
+        <div class="p-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <span class="font-medium text-slate-300"><?php echo APP_NAME; ?></span>
+            <span class="text-[10px] bg-slate-800/80 px-2 py-0.5 rounded text-slate-400 font-mono">v<?php echo APP_VERSION; ?></span>
         </div>
     </div>
 </div>
+

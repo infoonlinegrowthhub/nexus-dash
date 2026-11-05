@@ -61,3 +61,4 @@ $current_user = currentUser();
 
             <!-- Main Scrollable Content -->
             <main class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+

@@ -9,3 +9,4 @@ Thumbs.db
 config/db_local.php
 uploads/*
 !uploads/.gitkeep
+

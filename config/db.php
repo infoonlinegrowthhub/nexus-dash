@@ -40,3 +40,4 @@ function getDb() {
     global $pdo;
     return $pdo;
 }
+

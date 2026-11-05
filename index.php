@@ -42,17 +42,17 @@ if (empty($recent_records)) {
             <span class="text-xl">👋</span>
         </h1>
         <p class="text-sm text-slate-500 mt-1">
-            Engineered by <a href="<?php echo AGENCY_WEBSITE; ?>" target="_blank" class="font-semibold text-blue-600 hover:underline"><?php echo AGENCY_NAME; ?></a>. Production system active.
+            Overview of your application metrics, records, and performance.
         </p>
     </div>
     <div class="flex items-center gap-3">
-        <a href="<?php echo AGENCY_WHATSAPP_URL; ?>" target="_blank" 
-           class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition">
-            <i data-lucide="phone-call" class="w-4 h-4"></i>
-            <span>Hire Dev: <?php echo AGENCY_PHONE_RAW; ?></span>
-        </a>
         <a href="records.php" 
-           class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition">
+           class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm transition">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>New Record</span>
+        </a>
+    </div>
+</div>
             <i data-lucide="plus-circle" class="w-4 h-4"></i>
             <span>New Record</span>
         </a>
@@ -199,34 +199,5 @@ if (empty($recent_records)) {
     </div>
 </div>
 
-<!-- Agency Promotion / Project Pitch Banner -->
-<div class="rounded-2xl p-6 bg-gradient-to-r from-slate-900 via-slate-800 to-blue-950 text-white relative overflow-hidden border border-slate-800 shadow-lg">
-    <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div class="max-w-xl">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-semibold mb-3">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                <span>Official Partner & Development Agency</span>
-            </div>
-            <h3 class="text-xl md:text-2xl font-bold tracking-tight mb-2">
-                Have a Complex Web Application or Client Project in Mind?
-            </h3>
-            <p class="text-sm text-slate-300 leading-relaxed">
-                Connect with <strong>Online Growth Hub</strong> for end-to-end custom development: Razorpay payments, WhatsApp Cloud CRM, Hostinger Git CI/CD, MySQL architectures, and custom portals.
-            </p>
-        </div>
-        <div class="flex flex-col sm:flex-row items-center gap-3 flex-shrink-0">
-            <a href="<?php echo AGENCY_WHATSAPP_URL; ?>" target="_blank" 
-               class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm transition shadow-lg shadow-emerald-500/20">
-                <i data-lucide="message-square" class="w-4 h-4"></i>
-                <span>Call/WhatsApp: <?php echo AGENCY_PHONE_RAW; ?></span>
-            </a>
-            <a href="<?php echo AGENCY_WEBSITE; ?>" target="_blank" 
-               class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition">
-                <i data-lucide="globe" class="w-4 h-4"></i>
-                <span>Visit Website</span>
-            </a>
-        </div>
-    </div>
-</div>
-
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
+

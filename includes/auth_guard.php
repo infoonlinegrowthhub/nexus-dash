@@ -30,3 +30,4 @@ function currentUser() {
         'role'  => 'Super Admin',
     ];
 }
+

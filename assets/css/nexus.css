@@ -85,27 +85,6 @@ body {
     font-weight: 600;
 }
 
-/* Agency Promo Card in Sidebar */
-.agency-promo-card {
-    background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
-    border: 1px solid rgba(59, 130, 246, 0.25);
-    border-radius: 12px;
-    padding: 14px;
-    position: relative;
-    overflow: hidden;
-}
-
-.agency-promo-card::before {
-    content: '';
-    position: absolute;
-    top: -30px;
-    right: -30px;
-    width: 70px;
-    height: 70px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
-    border-radius: 50%;
-}
-
 /* Mobile Sidebar Drawer Transitions */
 #mobile-sidebar-backdrop {
     transition: opacity 0.25s ease-in-out;
@@ -134,3 +113,4 @@ body {
 .nexus-table tr:hover td {
     background-color: #f8fafc;
 }
+

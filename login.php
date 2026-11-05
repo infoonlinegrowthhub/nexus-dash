@@ -136,18 +136,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
 
-        <!-- Agency Promotion / Project Inquiries Footer -->
+        <!-- Clean Agency Footer -->
         <div class="mt-8 text-center text-xs text-slate-400">
-            <p>Need Custom Software Development or Client Portals?</p>
-            <div class="mt-2 flex items-center justify-center gap-3">
+            <p><?php echo APP_NAME; ?> v<?php echo APP_VERSION; ?> • Engineered by <a href="<?php echo AGENCY_WEBSITE; ?>" target="_blank" class="text-blue-400 hover:underline"><?php echo AGENCY_NAME; ?></a></p>
+            <div class="mt-2 flex items-center justify-center gap-2">
+                <span>Hire Us for Custom Development:</span>
                 <a href="<?php echo AGENCY_WHATSAPP_URL; ?>" target="_blank" 
-                   class="inline-flex items-center gap-1.5 font-bold text-emerald-400 hover:text-emerald-300 transition">
-                    <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
-                    <span>Call/WhatsApp: <?php echo AGENCY_PHONE_RAW; ?></span>
+                   class="font-bold text-emerald-400 hover:text-emerald-300 transition">
+                    <?php echo AGENCY_PHONE; ?>
                 </a>
                 <span>•</span>
                 <a href="<?php echo AGENCY_WEBSITE; ?>" target="_blank" 
-                   class="text-slate-300 hover:text-white transition font-medium">
+                   class="text-slate-300 hover:text-white transition">
                     onlinegrowthhub.in
                 </a>
             </div>
@@ -160,3 +160,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </body>
 </html>
+

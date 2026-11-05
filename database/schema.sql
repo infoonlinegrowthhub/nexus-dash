@@ -42,3 +42,4 @@ INSERT INTO `records` (`title`, `client_name`, `client_phone`, `category`, `budg
 ('School Management & Fee ERP', 'DPS Academy', '+91 9988776655', 'Enterprise ERP', 85000.00, 'active'),
 ('Real Estate Lead CRM & WhatsApp Bot', 'Apex Realty Group', '+91 9871122334', 'CRM & Automation', 35000.00, 'pending'),
 ('Hostinger Automated Cloud Deployment', 'TechSpark Labs', '+91 9011223344', 'DevOps & Cloud', 25000.00, 'completed');
+

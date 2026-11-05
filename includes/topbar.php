@@ -29,16 +29,8 @@ $user = currentUser();
         </div>
     </div>
 
-    <!-- Right: Agency Promotion Pill, Notification & User Dropdown -->
+    <!-- Right: Notification & User Dropdown -->
     <div class="flex items-center gap-3 md:gap-4">
-        
-        <!-- Agency Direct Contact Badge (Lead Generation Widget) -->
-        <a href="<?php echo AGENCY_WHATSAPP_URL; ?>" target="_blank"
-           class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold hover:bg-emerald-100 transition shadow-2xs">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Hire Us: <?php echo AGENCY_PHONE_RAW; ?></span>
-        </a>
-
         <!-- Notifications -->
         <button class="relative p-2 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition" title="Notifications">
             <i data-lucide="bell" class="w-4 h-4"></i>
@@ -89,3 +81,4 @@ $user = currentUser();
 
     </div>
 </header>
+
