@@ -1,11 +1,11 @@
 /**
- * Nexus Dash - Chart Configurations
- * Purpose: Initializes Chart.js instances for Activity Overview and Status Breakdown
- * Note: Pure vanilla JavaScript relying on Chart.js CDN.
+ * Nexus Dash - Chart Engine (Chart.js)
+ * Purpose: Initializes all analytical visualizations for the Dashboard and Analytics views.
  */
 
 let activityChartInstance = null;
 let statusDonutChartInstance = null;
+let analyticsInstances = {};
 
 function initCharts() {
     initActivityLineChart("7d");
@@ -17,13 +17,15 @@ function initActivityLineChart(initialRange = "7d") {
     if (!canvas || !window.Chart) return;
 
     const dataConfig = ChartDataSets.activity[initialRange] || ChartDataSets.activity["7d"];
-
     const ctx = canvas.getContext("2d");
 
-    // Primary gradient
     const primaryGradient = ctx.createLinearGradient(0, 0, 0, 300);
     primaryGradient.addColorStop(0, "rgba(16, 185, 129, 0.2)");
     primaryGradient.addColorStop(1, "rgba(16, 185, 129, 0.0)");
+
+    if (activityChartInstance) {
+        activityChartInstance.destroy();
+    }
 
     activityChartInstance = new Chart(canvas, {
         type: "line",
@@ -47,7 +49,7 @@ function initActivityLineChart(initialRange = "7d") {
                 {
                     label: "Previous Period",
                     data: dataConfig.secondarySeries,
-                    borderColor: "#cbd5e1",
+                    borderColor: "#94a3b8",
                     borderWidth: 1.5,
                     borderDash: [4, 4],
                     fill: false,
@@ -69,41 +71,24 @@ function initActivityLineChart(initialRange = "7d") {
                         boxWidth: 12,
                         boxHeight: 12,
                         usePointStyle: true,
-                        font: {
-                            size: 11,
-                            family: "inherit"
-                        },
                         color: "#64748b"
                     }
                 },
                 tooltip: {
                     backgroundColor: "#0f172a",
-                    titleFont: { size: 12, weight: "600" },
-                    bodyFont: { size: 12 },
                     padding: 10,
-                    cornerRadius: 8,
-                    displayColors: true
+                    cornerRadius: 8
                 }
             },
             scales: {
                 x: {
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        font: { size: 11 },
-                        color: "#94a3b8"
-                    }
+                    grid: { display: false },
+                    ticks: { color: "#94a3b8" }
                 },
                 y: {
-                    border: {
-                        dash: [3, 3]
-                    },
-                    grid: {
-                        color: "#f1f5f9"
-                    },
+                    border: { dash: [3, 3] },
+                    grid: { color: "#f1f5f9" },
                     ticks: {
-                        font: { size: 11 },
                         color: "#94a3b8",
                         callback: function (val) {
                             return val >= 1000 ? (val / 1000) + "k" : val;
@@ -132,6 +117,10 @@ function initStatusDonutChart() {
 
     const dataset = ChartDataSets.statusBreakdown;
 
+    if (statusDonutChartInstance) {
+        statusDonutChartInstance.destroy();
+    }
+
     statusDonutChartInstance = new Chart(canvas, {
         type: "doughnut",
         data: {
@@ -151,13 +140,9 @@ function initStatusDonutChart() {
             maintainAspectRatio: false,
             cutout: "75%",
             plugins: {
-                legend: {
-                    display: false
-                },
+                legend: { display: false },
                 tooltip: {
                     backgroundColor: "#0f172a",
-                    titleFont: { size: 12, weight: "600" },
-                    bodyFont: { size: 12 },
                     padding: 10,
                     cornerRadius: 8,
                     callbacks: {
@@ -169,4 +154,115 @@ function initStatusDonutChart() {
             }
         }
     });
+}
+
+/**
+ * Initializes the 4 dedicated charts for analytics.html:
+ * 1. Line: Traffic trend
+ * 2. Bar: Revenue by acquisition channel
+ * 3. Pie: Device session breakdown
+ * 4. Horizontal Bar: Regional distribution
+ */
+function initAnalyticsCharts() {
+    if (!window.Chart) return;
+    const aData = ChartDataSets.analytics;
+
+    // 1. Traffic Trend Line Chart
+    const trafficCanvas = document.getElementById("chart-traffic-trend");
+    if (trafficCanvas) {
+        analyticsInstances.traffic = new Chart(trafficCanvas, {
+            type: "line",
+            data: {
+                labels: aData.trafficTrend.labels,
+                datasets: [
+                    {
+                        label: "Organic Search",
+                        data: aData.trafficTrend.organic,
+                        borderColor: "#10b981",
+                        backgroundColor: "rgba(16, 185, 129, 0.1)",
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: "Referral / Direct",
+                        data: aData.trafficTrend.referral,
+                        borderColor: "#3b82f6",
+                        borderDash: [3, 3],
+                        fill: false,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: "top", align: "end" } }
+            }
+        });
+    }
+
+    // 2. Revenue by Channel Vertical Bar
+    const channelCanvas = document.getElementById("chart-revenue-channel");
+    if (channelCanvas) {
+        analyticsInstances.channel = new Chart(channelCanvas, {
+            type: "bar",
+            data: {
+                labels: aData.revenueByChannel.labels,
+                datasets: [{
+                    label: "Gross Revenue ($)",
+                    data: aData.revenueByChannel.values,
+                    backgroundColor: ["#10b981", "#3b82f6", "#6366f1", "#f59e0b", "#ec4899"],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
+
+    // 3. Device Breakdown Pie Chart
+    const deviceCanvas = document.getElementById("chart-device-breakdown");
+    if (deviceCanvas) {
+        analyticsInstances.device = new Chart(deviceCanvas, {
+            type: "pie",
+            data: {
+                labels: aData.deviceBreakdown.labels,
+                datasets: [{
+                    data: aData.deviceBreakdown.values,
+                    backgroundColor: aData.deviceBreakdown.colors
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: "bottom" } }
+            }
+        });
+    }
+
+    // 4. Regional Distribution Horizontal Bar Chart
+    const regionalCanvas = document.getElementById("chart-regional-distribution");
+    if (regionalCanvas) {
+        analyticsInstances.regional = new Chart(regionalCanvas, {
+            type: "bar",
+            data: {
+                labels: aData.regionalDistribution.labels,
+                datasets: [{
+                    label: "Market Share (%)",
+                    data: aData.regionalDistribution.values,
+                    backgroundColor: "#3b82f6",
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: "y",
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
 }

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Third-Party Integrations & Services">
+    <title>Integrations - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
+                    </div>
+                </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search connected apps..." aria-label="Search integrations">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button type="button" class="icon-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="theme-icon" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <a href="notifications.html" class="icon-btn" aria-label="Notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </a>
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="User menu">
+                            <div class="user-avatar user-initials">AU</div>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width: 15px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item"><i data-lucide="settings" style="width: 15px;"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="login.html" class="dropdown-item"><i data-lucide="log-out" style="width: 15px;"></i> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <section class="page-header" aria-label="Integrations Header">
+                    <div>
+                        <h1 class="page-header-title">Connected Services</h1>
+                        <p class="page-header-subtitle">Payment gateways, cloud infrastructure providers, and external webhooks</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button type="button" class="btn-primary" onclick="showToast('Integration marketplace opened', 'info')">
+                            <i data-lucide="plus" style="width: 15px;"></i>
+                            <span>Add Integration</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="toggle-cards-grid" id="integrations-grid-container" aria-label="Integration Service Cards">
+                    <!-- Populated dynamically -->
+                </section>
+            </main>
+
+            <footer class="app-footer">
+                <div>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</div>
+                <div class="footer-links">
+                    <a href="settings.html">Documentation</a>
+                    <a href="settings.html">Privacy</a>
+                    <a href="settings.html">Support</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById("integrations-grid-container");
+
+            function renderIntegrations() {
+                let html = "";
+                MockIntegrationsData.forEach((item, idx) => {
+                    const statusClass = item.connected ? "badge-success" : "badge-info";
+                    const statusText = item.connected ? "Connected" : "Not Configured";
+
+                    html += `
+                        <div class="toggle-card">
+                            <div class="toggle-card-header">
+                                <div style="display: flex; gap: 12px; align-items: center;">
+                                    <div class="action-tile-icon" style="margin-bottom: 0;">
+                                        <i data-lucide="${item.icon}" style="width: 18px; height: 18px;"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="toggle-card-title">${item.name}</h3>
+                                        <span class="badge badge-info" style="margin-top: 4px;">${item.category}</span>
+                                    </div>
+                                </div>
+                                <label class="switch-toggle" aria-label="Toggle integration connection">
+                                    <input type="checkbox" class="switch-input" ${item.connected ? 'checked' : ''} onchange="toggleIntegration(${idx}, this.checked)">
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                            <p class="toggle-card-desc">${item.description}</p>
+                            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--color-border-subtle); padding-top: 10px;">
+                                <span class="badge ${statusClass}">${statusText}</span>
+                                <button type="button" class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" onclick="showToast('Configure credentials for ${item.name}', 'info')">
+                                    Configure
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                if (container) container.innerHTML = html;
+                if (window.lucide) window.lucide.createIcons();
+            }
+
+            renderIntegrations();
+
+            window.toggleIntegration = function(idx, isChecked) {
+                MockIntegrationsData[idx].connected = isChecked;
+                renderIntegrations();
+                showToast(`${MockIntegrationsData[idx].name} ${isChecked ? 'connected' : 'disconnected'}`, "info");
+            };
+        });
+    </script>
+</body>
+</html>

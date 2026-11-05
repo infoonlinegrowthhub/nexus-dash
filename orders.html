@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Customer Orders & Invoices">
+    <title>Orders - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
+                    </div>
+                </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search orders..." aria-label="Search orders">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button type="button" class="icon-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="theme-icon" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <a href="notifications.html" class="icon-btn" aria-label="Notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </a>
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="User menu">
+                            <div class="user-avatar user-initials">AU</div>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width: 15px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item"><i data-lucide="settings" style="width: 15px;"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="login.html" class="dropdown-item"><i data-lucide="log-out" style="width: 15px;"></i> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <section class="page-header" aria-label="Orders Header">
+                    <div>
+                        <h1 class="page-header-title">Orders & Transactions</h1>
+                        <p class="page-header-subtitle">Purchase orders, payment states, and line item fulfillment</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button type="button" class="btn-secondary" id="export-orders-btn">
+                            <i data-lucide="download" style="width: 15px;"></i>
+                            <span>Export CSV</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="card-panel" aria-label="Orders Table">
+                    <div class="table-toolbar">
+                        <div class="table-toolbar-left">
+                            <div class="table-search-box">
+                                <i data-lucide="search" class="table-search-icon"></i>
+                                <input type="text" id="orders-search-input" class="table-search-input" placeholder="Search order ID, customer..." aria-label="Filter orders">
+                            </div>
+                            <select id="orders-status-filter" class="form-select" aria-label="Filter by order status">
+                                <option value="all">All Statuses</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Processing">Processing</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive-wrapper">
+                        <table class="data-table" id="orders-table">
+                            <thead>
+                                <tr>
+                                    <th data-sort="id">Order #</th>
+                                    <th data-sort="customer">Customer</th>
+                                    <th data-sort="date">Date</th>
+                                    <th data-sort="items">Items</th>
+                                    <th data-sort="total">Total</th>
+                                    <th data-sort="paymentMethod">Payment</th>
+                                    <th data-sort="status">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-tbody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-pagination-footer" id="orders-pagination"></div>
+                </section>
+            </main>
+
+            <footer class="app-footer">
+                <div>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</div>
+                <div class="footer-links">
+                    <a href="settings.html">Documentation</a>
+                    <a href="settings.html">Privacy</a>
+                    <a href="settings.html">Support</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/tables.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tableController = new DataTableController({
+                tableId: "orders-table",
+                tbodyId: "orders-tbody",
+                paginationId: "orders-pagination",
+                searchInputId: "orders-search-input",
+                statusFilterId: "orders-status-filter",
+                pageSize: 5,
+                defaultSortColumn: "id",
+                data: MockOrdersData,
+                rowRenderer: (ord) => {
+                    let badgeClass = "badge-info";
+                    if (ord.status === "Completed") badgeClass = "badge-success";
+                    if (ord.status === "Pending") badgeClass = "badge-warning";
+                    if (ord.status === "Cancelled") badgeClass = "badge-danger";
+
+                    return `
+                        <tr>
+                            <td style="font-weight: 600; color: var(--color-primary);">${ord.id}</td>
+                            <td style="font-weight: 600;">${ord.customer}</td>
+                            <td>${ord.date}</td>
+                            <td>${ord.items} items</td>
+                            <td style="font-weight: 600;">${ord.total}</td>
+                            <td>${ord.paymentMethod}</td>
+                            <td><span class="badge ${badgeClass}">${ord.status}</span></td>
+                        </tr>
+                    `;
+                }
+            });
+
+            const exportBtn = document.getElementById("export-orders-btn");
+            if (exportBtn) {
+                exportBtn.addEventListener("click", () => {
+                    tableController.exportCSV("orders-export.csv");
+                });
+            }
+        });
+    </script>
+</body>
+</html>

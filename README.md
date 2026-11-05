@@ -2,7 +2,7 @@
 
 A clean, modular, and lightweight static admin dashboard template built with pure HTML5, modern CSS3, and vanilla JavaScript. 
 
-Nexus Dash provides a solid, accessible, and responsive foundation for web applications, SaaS backends, internal tools, and developer prototypes—with zero build steps, zero npm packages, and zero framework overhead.
+Nexus Dash provides a solid, accessible, and responsive foundation for web applications, SaaS backends, CRM portals, e-commerce stores, internal tooling, and developer prototypes—with zero build steps, zero npm packages, and zero framework overhead.
 
 ---
 
@@ -10,17 +10,44 @@ Nexus Dash provides a solid, accessible, and responsive foundation for web appli
 
 - **Zero Build Step:** Runs directly in any modern browser. No webpack, vite, npm, or transpilation required.
 - **Pure Vanilla Stack:** Built exclusively with semantic HTML5, CSS custom properties (variables), and vanilla ES6 JavaScript.
+- **Dark Mode Support:** Native light and dark theme switching via `data-theme="dark"` and CSS custom properties.
+- **Rich Text Editing:** Pinned CDN integration with **Quill.js** for post creation, product descriptions, campaign drafts, message replies, and notification templates.
+- **Interactive Visualizations:** High-performance responsive charts powered by **Chart.js** CDN (Line, Bar, Donut, Pie, Horizontal Bar).
+- **Icon System:** Clean vector icons via **Lucide Icons** CDN.
+- **Interactive Components:** Accessible modals, confirm dialogs, floating toast notifications, tab navigation, drag-and-drop Kanban pipeline, searchable/sortable/paginated data tables with multi-select checkboxes, and direct CSV export downloads.
 - **Responsive Layout System:**
-  - **Desktop (>= 1100px):** Fixed navigation sidebar, 6 KPI cards in a single row, dual-column charts.
-  - **Tablet (768px - 1099px):** 3-column KPI grid, stacked chart panels.
-  - **Mobile (< 768px):** Slide-in off-canvas navigation drawer with backdrop, 2-column KPI grid, touch-friendly interactive targets, and horizontally scrollable data tables.
-- **Dynamic Modular Configuration:**
-  - Site title, subtitle, status pills, and user profile configured in a single file (`config/site.js`).
-  - Navigation hierarchy and menu groups configured in `js/menu.js`.
-  - Metrics, chart series, action tiles, and sample data isolated in `data/mock.js`.
-- **Integrated CDN Visuals:**
-  - Modern icon set via **Lucide Icons**.
-  - Interactive line and donut charts via **Chart.js**.
+  - **Desktop (>= 1280px):** Fixed navigation sidebar, 6 KPI cards in a single row, dual-column charts.
+  - **Tablet (768px - 1279px):** 3-column KPI grid, stacked chart panels, off-canvas navigation drawer.
+  - **Mobile (< 768px):** Slide-in navigation drawer with backdrop, 2-column KPI grid, touch-friendly interactive targets (>= 44px), full-screen modal sheets, and horizontally scrollable tables and Kanban board.
+
+---
+
+## Complete Pages Included
+
+| Page | File | Description |
+| :--- | :--- | :--- |
+| **Dashboard** | `index.html` | KPI metric stat tiles, activity line chart, status donut chart, quick actions, recent events |
+| **Analytics** | `analytics.html` | 4 analytical charts (trend, channel, device pie, regional horizontal bar), summary ledger |
+| **Users** | `users.html` | Paginated users table with multi-select, sort, status badges, and Add User modal |
+| **Customers** | `customers.html` | Client accounts directory with total spend, order count, and search/sort filters |
+| **Orders** | `orders.html` | Transaction orders with payment methods, status filters, and CSV export |
+| **Products** | `products.html` | Grid view and Table view toggle, stock badges, and Add Product modal with Quill editor |
+| **Content** | `content.html` | Articles and post management with draft/published filter, and Quill post editor |
+| **Messages** | `messages.html` | Two-pane inbox with contact thread list and compact Quill reply box |
+| **Tasks** | `tasks.html` | Three-column Kanban board (To do, In progress, Done) with drag-and-drop cards |
+| **Campaigns** | `campaigns.html` | Campaign cards with on/off switch toggles, status pills, and Quill composer modal |
+| **Automations** | `automations.html` | Workflow automation cards with trigger/action descriptions and switch toggles |
+| **Integrations** | `integrations.html` | Connected third-party cloud tools and payment gateway cards with toggle switches |
+| **Reports** | `reports.html` | Financial accounting ledger table with period filter and real CSV export download |
+| **Notifications** | `notifications.html` | Notification broadcast center with unread highlights and "Mark all as read" action |
+| **Team** | `team.html` | Member directory with inline role modification dropdown and Invite Member modal |
+| **Settings** | `settings.html` | Tabbed configuration (Profile, Security, Appearance, Billing) with form validation |
+| **Templates** | `templates.html` | Message templates with preview, duplicate action, and Quill template editor modal |
+| **Profile** | `profile.html` | Personal administrator details, avatar initials, and editable credentials form |
+| **Sign In** | `login.html` | Authentication form with email/password validation, remember-me, and recovery link |
+| **Register** | `register.html` | Workspace onboarding form with terms acceptance and field validation |
+| **Forgot Password** | `forgot-password.html` | Password recovery request form with instant validation feedback |
+| **Not Found (404)** | `404.html` | Standalone error screen with return navigation link |
 
 ---
 
@@ -28,19 +55,26 @@ Nexus Dash provides a solid, accessible, and responsive foundation for web appli
 
 ```text
 nexus-dash/
+├── assets/
+│   └── images/          # Placeholder SVGs (avatar, product, empty-state, favicon)
 ├── config/
-│   └── site.js          # App branding, user info, and status settings
+│   └── site.js          # App branding, user info, status & plan settings
 ├── css/
-│   └── styles.css       # Complete layout, design rules, variables & responsive rules
+│   └── styles.css       # Complete layout, design rules, variables, dark mode & responsive rules
 ├── data/
-│   └── mock.js          # KPI metrics, chart datasets, quick actions & table rows
+│   └── mock.js          # KPI metrics, chart datasets, users, products, tasks & table rows
 ├── js/
-│   ├── app.js           # DOM controller, mobile drawer, dropdowns & event handlers
-│   ├── charts.js        # Chart.js initialization and dynamic range filtering
-│   └── menu.js          # Sidebar navigation data structure and dynamic renderer
+│   ├── app.js           # Theme toggle, mobile drawer, dropdowns & navigation controller
+│   ├── charts.js        # Chart.js initialization (Dashboard & Analytics)
+│   ├── editor.js        # Quill.js wrapper with character/word counters & hidden input sync
+│   ├── forms.js         # Client-side form validation with accessible error states
+│   ├── menu.js          # Sidebar grouped menu configuration and dynamic renderer
+│   ├── modals.js        # Accessible modal dialogs with focus trapping and Escape key
+│   ├── tables.js        # DataTable engine (search, sort, pagination, multi-select, CSV export)
+│   └── toast.js         # Lightweight floating toast notification controller
 ├── .env.example         # Optional environment configuration template
-├── .gitignore           # Git ignore rules for clean repository management
-├── index.html           # Main semantic dashboard view
+├── .gitignore           # Version control exclusions
+├── index.html           # Main dashboard view
 ├── LICENSE              # MIT License
 └── README.md            # Documentation and usage guide
 ```
@@ -49,25 +83,25 @@ nexus-dash/
 
 ## Getting Started
 
-### 1. Run Locally
-Because Nexus Dash uses pure static files, you can run it immediately:
-- **Directly:** Double-click `index.html` to open it in your browser.
-- **Via Local Server (Optional):**
-  ```bash
-  # Python 3
-  python -m http.server 8000
+### 1. Run Directly
+Because Nexus Dash uses pure static files, you can run it immediately without any tooling:
+- Double-click `index.html` or `login.html` to open it directly in Chrome, Edge, Safari, or Firefox.
 
-  # Node.js (npx)
-  npx serve .
-  ```
-  Then navigate to `http://127.0.0.1:8000` in your web browser.
+### 2. Run via Local Static Server (Optional)
+```bash
+# Python 3
+python -m http.server 8000
+
+# Node.js (npx)
+npx serve .
+```
 
 ---
 
 ## Customization Guide
 
 ### 1. Changing Brand Name and User Profile
-Open `config/site.js` and modify the values in `SiteConfig`:
+Open `config/site.js` and modify `SiteConfig`:
 
 ```javascript
 const SiteConfig = {
@@ -83,32 +117,25 @@ const SiteConfig = {
     }
 };
 ```
-The topbar, sidebar, page titles, and user profile cards update automatically.
 
----
-
-### 2. Modifying Sidebar Menu Items
-Open `js/menu.js` to add, edit, or remove menu categories and links:
+### 2. Modifying the Sidebar Navigation Menu
+Open `js/menu.js` to customize groups, icons, labels, or links:
 
 ```javascript
 const NavigationMenuConfig = [
     {
         groupTitle: "Overview",
         items: [
-            { id: "nav-dashboard", label: "Dashboard", icon: "layout-grid", url: "index.html", active: true },
-            { id: "nav-analytics", label: "Analytics", icon: "bar-chart-2", url: "analytics.html", badge: null }
+            { id: "nav-dashboard", label: "Dashboard", icon: "layout-grid", url: "index.html" },
+            { id: "nav-analytics", label: "Analytics", icon: "bar-chart-2", url: "analytics.html" }
         ]
-    },
-    // Add additional groups as needed
+    }
 ];
 ```
-
-*Note: For the `icon` field, use any icon name supported by [Lucide Icons](https://lucide.dev/icons).*
-
----
+*(Icon names correspond to Lucide Icons).*
 
 ### 3. Customizing Colors & Theme
-All theme properties are defined as CSS variables at the top of `css/styles.css`:
+All color properties and spacing are configured via CSS variables at the top of `css/styles.css`:
 
 ```css
 :root {
@@ -116,42 +143,20 @@ All theme properties are defined as CSS variables at the top of `css/styles.css`
     --color-surface: #ffffff;
     --color-primary: #10b981;        /* Primary brand accent */
     --color-primary-hover: #059669;
-    --color-text-main: #0f172a;
-    --radius-md: 10px;               /* Global border radius */
+    --radius-md: 10px;               /* Default border radius */
+}
+
+/* Dark mode theme variables */
+[data-theme="dark"] {
+    --color-bg: #090d16;
+    --color-surface: #131c2e;
 }
 ```
-Adjusting these values updates the theme uniformly across all components.
 
----
-
-### 4. Updating Dashboard Metrics and Charts
-Open `data/mock.js`:
-- Edit `KpiMetricsData` to customize the 6 stat cards (label, value, trend percentage, icon).
-- Edit `ChartDataSets.activity` to update the 7-day, 30-day, and 90-day chart numbers.
-- Edit `QuickActionsData` to define custom action tiles.
-
----
-
-### 5. Adding a New Page
-To create a new subpage (e.g., `customers.html`):
-1. Duplicate `index.html` and save it as `customers.html`.
-2. In `customers.html`, replace the `<main>` content section with your new view markup.
-3. In `js/menu.js`, set `active: true` for the corresponding menu item when loading that page.
-
----
-
-## Pushing to GitHub
-
-To publish this project to your GitHub repository:
-
-```bash
-git init
-git add .
-git commit -m "feat: initial commit for Nexus Dash admin template"
-git branch -M main
-git remote add origin https://github.com/infoonlinegrowthhub/nexus-dash.git
-git push -u origin main
-```
+### 4. Adding a New Page
+1. Duplicate `index.html` (or `users.html` for a table page) and name it (e.g. `inventory.html`).
+2. Replace the `<main>` container content with your specific markup.
+3. Add the item to `NavigationMenuConfig` in `js/menu.js`. The sidebar will automatically highlight it when active.
 
 ---
 

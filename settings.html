@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Workspace Settings & Preferences">
+    <title>Settings - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
+                    </div>
+                </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search settings..." aria-label="Search settings">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button type="button" class="icon-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="theme-icon" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <a href="notifications.html" class="icon-btn" aria-label="Notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </a>
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="User menu">
+                            <div class="user-avatar user-initials">AU</div>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width: 15px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item"><i data-lucide="settings" style="width: 15px;"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="login.html" class="dropdown-item"><i data-lucide="log-out" style="width: 15px;"></i> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <section class="page-header" aria-label="Settings Header">
+                    <div>
+                        <h1 class="page-header-title">System Settings</h1>
+                        <p class="page-header-subtitle">Configure workspace profile, security protocols, appearance, and billing</p>
+                    </div>
+                </section>
+
+                <div class="tab-container card-panel">
+                    <!-- Tab Navigation -->
+                    <div class="tab-navigation" role="tablist">
+                        <button type="button" class="tab-btn active" data-tab-target="tab-profile" role="tab" aria-selected="true">Profile</button>
+                        <button type="button" class="tab-btn" data-tab-target="tab-security" role="tab" aria-selected="false">Security</button>
+                        <button type="button" class="tab-btn" data-tab-target="tab-appearance" role="tab" aria-selected="false">Appearance</button>
+                        <button type="button" class="tab-btn" data-tab-target="tab-billing" role="tab" aria-selected="false">Billing</button>
+                    </div>
+
+                    <!-- 1. Profile Tab -->
+                    <div class="tab-pane active" id="tab-profile" role="tabpanel">
+                        <form id="profile-settings-form" novalidate style="max-width: 580px; display: flex; flex-direction: column; gap: 16px;">
+                            <div class="form-group">
+                                <label for="set-app-name" class="form-label">Application Name</label>
+                                <input type="text" id="set-app-name" class="form-input" value="Nexus Dash" required minlength="3">
+                            </div>
+                            <div class="form-group">
+                                <label for="set-subtitle" class="form-label">Console Subtitle</label>
+                                <input type="text" id="set-subtitle" class="form-input" value="Admin Console" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="set-contact-email" class="form-label">Support Email</label>
+                                <input type="email" id="set-contact-email" class="form-input" value="support@example.com" required>
+                            </div>
+                            <div style="display: flex; gap: 10px; margin-top: 8px;">
+                                <button type="submit" class="btn-primary">Save Changes</button>
+                                <button type="reset" class="btn-secondary">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- 2. Security Tab -->
+                    <div class="tab-pane" id="tab-security" role="tabpanel">
+                        <form id="security-settings-form" novalidate style="max-width: 580px; display: flex; flex-direction: column; gap: 16px;">
+                            <div class="form-group">
+                                <label for="cur-pass" class="form-label">Current Password</label>
+                                <input type="password" id="cur-pass" class="form-input" placeholder="••••••••" required minlength="6">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-pass" class="form-label">New Password</label>
+                                <input type="password" id="new-pass" class="form-input" placeholder="••••••••" required minlength="8">
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: var(--color-bg); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 13px;">Two-Factor Authentication</div>
+                                    <div style="font-size: 11px; color: var(--color-text-muted);">Enforce authenticator app verification upon login</div>
+                                </div>
+                                <label class="switch-toggle" aria-label="Toggle Two Factor Authentication">
+                                    <input type="checkbox" class="switch-input" checked>
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                            <div style="display: flex; gap: 10px; margin-top: 8px;">
+                                <button type="submit" class="btn-primary">Update Security</button>
+                                <button type="reset" class="btn-secondary">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- 3. Appearance Tab -->
+                    <div class="tab-pane" id="tab-appearance" role="tabpanel">
+                        <div style="max-width: 580px; display: flex; flex-direction: column; gap: 16px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px; background: var(--color-bg); border-radius: var(--radius-md); border: 1px solid var(--color-border);">
+                                <div>
+                                    <div style="font-weight: 600; font-size: 13px;">Dark Mode Theme</div>
+                                    <div style="font-size: 11px; color: var(--color-text-muted);">Toggle between high-contrast dark palette and standard light mode</div>
+                                </div>
+                                <button type="button" class="btn-secondary theme-toggle-btn">
+                                    <i data-lucide="moon" class="theme-icon" style="width: 15px;"></i>
+                                    <span>Toggle Theme</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Billing Tab -->
+                    <div class="tab-pane" id="tab-billing" role="tabpanel">
+                        <div style="max-width: 580px; display: flex; flex-direction: column; gap: 16px;">
+                            <div style="padding: 16px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-bg);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h3 style="font-size: 15px; font-weight: 700;">Free Tier Plan</h3>
+                                        <p style="font-size: 12px; color: var(--color-text-muted);">Community edition &bull; Unlimited static pages</p>
+                                    </div>
+                                    <span class="plan-pill">Active</span>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-primary" style="align-self: flex-start;" onclick="showToast('Upgrade portal triggered', 'info')">
+                                Upgrade to Enterprise
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="app-footer">
+                <div>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</div>
+                <div class="footer-links">
+                    <a href="settings.html">Documentation</a>
+                    <a href="settings.html">Privacy</a>
+                    <a href="settings.html">Support</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setupFormValidation("#profile-settings-form", (form) => {
+                showToast("Profile configuration saved successfully", "success");
+            });
+
+            setupFormValidation("#security-settings-form", (form) => {
+                showToast("Security settings updated", "success");
+            });
+        });
+    </script>
+</body>
+</html>

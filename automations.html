@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Event-Driven System Automations">
+    <title>Automations - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
+                    </div>
+                </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search workflow rules..." aria-label="Search automations">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button type="button" class="icon-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="theme-icon" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <a href="notifications.html" class="icon-btn" aria-label="Notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </a>
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="User menu">
+                            <div class="user-avatar user-initials">AU</div>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width: 15px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item"><i data-lucide="settings" style="width: 15px;"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="login.html" class="dropdown-item"><i data-lucide="log-out" style="width: 15px;"></i> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <section class="page-header" aria-label="Automations Header">
+                    <div>
+                        <h1 class="page-header-title">Automations & Workflows</h1>
+                        <p class="page-header-subtitle">Event triggers, automated dispatch rules, and webhook pipelines</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button type="button" class="btn-primary" onclick="showToast('New automation builder opened', 'info')">
+                            <i data-lucide="plus" style="width: 15px;"></i>
+                            <span>New Rule</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="toggle-cards-grid" id="automations-grid-container" aria-label="Automation Rule Cards">
+                    <!-- Populated dynamically -->
+                </section>
+            </main>
+
+            <footer class="app-footer">
+                <div>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</div>
+                <div class="footer-links">
+                    <a href="settings.html">Documentation</a>
+                    <a href="settings.html">Privacy</a>
+                    <a href="settings.html">Support</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById("automations-grid-container");
+
+            function renderAutomations() {
+                let html = "";
+                MockAutomationsData.forEach((a, idx) => {
+                    const statusClass = a.active ? "badge-success" : "badge-info";
+                    const statusText = a.active ? "Enabled" : "Disabled";
+
+                    html += `
+                        <div class="toggle-card">
+                            <div class="toggle-card-header">
+                                <div>
+                                    <h3 class="toggle-card-title">${a.name}</h3>
+                                    <p class="toggle-card-desc" style="margin-top: 4px;">Trigger: <strong>${a.trigger}</strong></p>
+                                </div>
+                                <label class="switch-toggle" aria-label="Toggle automation state">
+                                    <input type="checkbox" class="switch-input" ${a.active ? 'checked' : ''} onchange="toggleAutomation(${idx}, this.checked)">
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                            <div style="font-size: 12px; color: var(--color-text-muted); background: var(--color-bg); padding: 8px 10px; border-radius: var(--radius-sm);">
+                                Action: ${a.action}
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--color-border-subtle); padding-top: 10px;">
+                                <span style="font-size: 11px; color: var(--color-text-subtle);">Last run: ${a.lastRun}</span>
+                                <span class="badge ${statusClass}">${statusText}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                if (container) container.innerHTML = html;
+            }
+
+            renderAutomations();
+
+            window.toggleAutomation = function(idx, isChecked) {
+                MockAutomationsData[idx].active = isChecked;
+                renderAutomations();
+                showToast(`Rule ${isChecked ? 'enabled' : 'disabled'}`, "info");
+            };
+        });
+    </script>
+</body>
+</html>

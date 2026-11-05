@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Financial Reports & Ledger Summaries">
+    <title>Reports - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
+                    </div>
+                </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search statements and ledgers..." aria-label="Search reports">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button type="button" class="icon-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="theme-icon" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <a href="notifications.html" class="icon-btn" aria-label="Notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </a>
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="User menu">
+                            <div class="user-avatar user-initials">AU</div>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width: 15px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item"><i data-lucide="settings" style="width: 15px;"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="login.html" class="dropdown-item"><i data-lucide="log-out" style="width: 15px;"></i> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <section class="page-header" aria-label="Reports Header">
+                    <div>
+                        <h1 class="page-header-title">Accounting & Reports</h1>
+                        <p class="page-header-subtitle">Aggregated transaction volumes, gross receipts, and net margin statements</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button type="button" class="btn-primary" id="btn-export-real-csv">
+                            <i data-lucide="download" style="width: 15px;"></i>
+                            <span>Export CSV</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="card-panel" aria-label="Reports Table Panel">
+                    <div class="table-toolbar">
+                        <div class="table-toolbar-left">
+                            <div class="table-search-box">
+                                <i data-lucide="search" class="table-search-icon"></i>
+                                <input type="text" id="reports-search-input" class="table-search-input" placeholder="Search line item category..." aria-label="Filter report rows">
+                            </div>
+                            <select id="reports-date-filter" class="form-select" aria-label="Filter by month">
+                                <option value="all">All Periods</option>
+                                <option value="2026-10-31">October 2026</option>
+                                <option value="2026-09-30">September 2026</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive-wrapper">
+                        <table class="data-table" id="reports-table">
+                            <thead>
+                                <tr>
+                                    <th data-sort="id">Report Ref</th>
+                                    <th data-sort="category">Category</th>
+                                    <th data-sort="transactions">Transactions</th>
+                                    <th data-sort="grossRevenue">Gross Revenue</th>
+                                    <th data-sort="netProfit">Net Margin</th>
+                                    <th data-sort="date">Accounting Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reports-tbody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-pagination-footer" id="reports-pagination"></div>
+                </section>
+            </main>
+
+            <footer class="app-footer">
+                <div>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</div>
+                <div class="footer-links">
+                    <a href="settings.html">Documentation</a>
+                    <a href="settings.html">Privacy</a>
+                    <a href="settings.html">Support</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/tables.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tableController = new DataTableController({
+                tableId: "reports-table",
+                tbodyId: "reports-tbody",
+                paginationId: "reports-pagination",
+                searchInputId: "reports-search-input",
+                statusFilterId: "reports-date-filter",
+                pageSize: 5,
+                defaultSortColumn: "id",
+                data: MockReportsData,
+                rowRenderer: (r) => {
+                    return `
+                        <tr>
+                            <td style="font-weight: 600; color: var(--color-text-muted);">${r.id}</td>
+                            <td style="font-weight: 600;">${r.category}</td>
+                            <td>${r.transactions} trans</td>
+                            <td style="font-weight: 600;">$${r.grossRevenue.toLocaleString()}</td>
+                            <td style="font-weight: 600; color: var(--color-success);">$${r.netProfit.toLocaleString()}</td>
+                            <td>${r.date}</td>
+                        </tr>
+                    `;
+                }
+            });
+
+            // Real CSV Export Action
+            const exportBtn = document.getElementById("btn-export-real-csv");
+            if (exportBtn) {
+                exportBtn.addEventListener("click", () => {
+                    tableController.exportCSV("financial-ledger-report.csv");
+                });
+            }
+        });
+    </script>
+</body>
+</html>

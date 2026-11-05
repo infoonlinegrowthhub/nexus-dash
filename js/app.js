@@ -1,26 +1,55 @@
 /**
- * Nexus Dash - Main Application Controller
- * Purpose: Handles DOM population, mobile drawer interactions, user dropdowns, and icon initialization.
+ * Nexus Dash - Global Application Controller
+ * Purpose: Manages layout initialization, dark mode theme switching, mobile drawer, dropdowns, and icon rendering.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+    initTheme();
     populateSiteConfig();
     renderNavigation();
-    renderKpiCards();
-    renderQuickActions();
-    renderRecentRecords();
-    setupEventListeners();
+    setupGlobalEventListeners();
 
     // Initialize Lucide Icons
-    if (window.lucide) {
+    if (window.lucide && typeof window.lucide.createIcons === "function") {
         window.lucide.createIcons();
     }
-
-    // Initialize Charts
-    if (typeof initCharts === "function") {
-        initCharts();
-    }
 });
+
+/**
+ * Initializes and switches Light / Dark Mode theme
+ */
+function initTheme() {
+    const savedTheme = localStorage.getItem("nexus_theme") || "light";
+    setTheme(savedTheme);
+
+    const themeToggleBtns = document.querySelectorAll(".theme-toggle-btn");
+    themeToggleBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+            const nextTheme = currentTheme === "dark" ? "light" : "dark";
+            setTheme(nextTheme);
+        });
+    });
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("nexus_theme", theme);
+
+    // Update icon states if toggle button exists
+    const themeIcons = document.querySelectorAll(".theme-icon");
+    themeIcons.forEach(icon => {
+        if (theme === "dark") {
+            icon.setAttribute("data-lucide", "sun");
+        } else {
+            icon.setAttribute("data-lucide", "moon");
+        }
+    });
+
+    if (window.lucide && typeof window.lucide.createIcons === "function") {
+        window.lucide.createIcons();
+    }
+}
 
 /**
  * Injects brand & user configuration from config/site.js
@@ -60,9 +89,6 @@ function populateSiteConfig() {
 
     const dropdownEmailEl = document.getElementById("dropdown-user-email");
     if (dropdownEmailEl) dropdownEmailEl.textContent = SiteConfig.currentUser.email;
-
-    // Document Title
-    document.title = `${SiteConfig.appName} - ${SiteConfig.appSubtitle}`;
 }
 
 /**
@@ -75,95 +101,9 @@ function renderNavigation() {
 }
 
 /**
- * Injects 6 KPI Metric Cards from data/mock.js
+ * Global UI Event Listeners for mobile drawer, dropdowns, and escape key
  */
-function renderKpiCards() {
-    const container = document.getElementById("kpi-cards-grid");
-    if (!container || typeof KpiMetricsData === "undefined") return;
-
-    let html = "";
-    KpiMetricsData.forEach(card => {
-        const trendClass = card.trendUp ? "up" : "down";
-        const trendIcon = card.trendUp ? "trending-up" : "trending-down";
-
-        html += `
-            <div class="kpi-card" id="${card.id}">
-                <div class="kpi-card-header">
-                    <div class="kpi-icon-box">
-                        <i data-lucide="${card.icon}" style="width: 17px; height: 17px;"></i>
-                    </div>
-                    <span class="kpi-trend-pill ${trendClass}">
-                        <i data-lucide="${trendIcon}" style="width: 12px; height: 12px;"></i>
-                        ${card.trend}
-                    </span>
-                </div>
-                <div class="kpi-card-body">
-                    <div class="kpi-value">${card.value}</div>
-                    <div class="kpi-label">${card.label}</div>
-                    <div class="kpi-caption">${card.caption}</div>
-                </div>
-            </div>
-        `;
-    });
-
-    container.innerHTML = html;
-}
-
-/**
- * Injects Quick Action tiles from data/mock.js
- */
-function renderQuickActions() {
-    const container = document.getElementById("quick-actions-grid");
-    if (!container || typeof QuickActionsData === "undefined") return;
-
-    let html = "";
-    QuickActionsData.forEach(action => {
-        html += `
-            <button type="button" class="action-tile" id="${action.id}" aria-label="${action.title}">
-                <div class="action-tile-icon">
-                    <i data-lucide="${action.icon}" style="width: 16px; height: 16px;"></i>
-                </div>
-                <span class="action-tile-title">${action.title}</span>
-                <span class="action-tile-desc">${action.description}</span>
-            </button>
-        `;
-    });
-
-    container.innerHTML = html;
-}
-
-/**
- * Injects Recent Records table rows from data/mock.js
- */
-function renderRecentRecords() {
-    const tbody = document.getElementById("recent-records-tbody");
-    if (!tbody || typeof RecentRecordsData === "undefined") return;
-
-    let html = "";
-    RecentRecordsData.forEach(item => {
-        let badgeClass = "badge-info";
-        if (item.statusType === "success") badgeClass = "badge-success";
-        if (item.statusType === "warning") badgeClass = "badge-warning";
-
-        html += `
-            <tr>
-                <td style="font-weight: 600; color: #64748b;">${item.id}</td>
-                <td style="font-weight: 600;">${item.title}</td>
-                <td>${item.category}</td>
-                <td>${item.account}</td>
-                <td style="font-weight: 600;">${item.budget}</td>
-                <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            </tr>
-        `;
-    });
-
-    tbody.innerHTML = html;
-}
-
-/**
- * UI Event Listeners for mobile drawer, dropdowns, and chart controls
- */
-function setupEventListeners() {
+function setupGlobalEventListeners() {
     const sidebar = document.getElementById("app-sidebar");
     const backdrop = document.getElementById("sidebar-backdrop");
     const openBtn = document.getElementById("mobile-menu-open-btn");
@@ -206,19 +146,37 @@ function setupEventListeners() {
         });
     }
 
-    // Chart Time Range Select
-    const timeRangeSelect = document.getElementById("chart-time-range");
-    if (timeRangeSelect && typeof updateActivityChart === "function") {
-        timeRangeSelect.addEventListener("change", (e) => {
-            updateActivityChart(e.target.value);
-        });
-    }
-
-    // Escape Key Handler
+    // Escape Key Handler for accessibility
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
             closeMobileSidebar();
             if (userDropdown) userDropdown.classList.remove("show");
+            if (typeof closeModal === "function") {
+                const openModals = document.querySelectorAll(".modal-overlay.modal-open");
+                openModals.forEach(m => closeModal(m.id));
+            }
         }
+    });
+
+    // Tab Navigation Components
+    const tabGroups = document.querySelectorAll(".tab-navigation");
+    tabGroups.forEach(group => {
+        const tabs = group.querySelectorAll(".tab-btn");
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                const targetId = tab.getAttribute("data-tab-target");
+                tabs.forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+
+                const parentCard = group.closest(".tab-container") || document;
+                const panes = parentCard.querySelectorAll(".tab-pane");
+                panes.forEach(pane => {
+                    pane.classList.remove("active");
+                    if (pane.id === targetId) {
+                        pane.classList.add("active");
+                    }
+                });
+            });
+        });
     });
 }

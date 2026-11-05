@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Content Management & Post Editor">
+    <title>Content - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Quill.js CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
+                    </div>
+                </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search posts..." aria-label="Search content">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button type="button" class="icon-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="theme-icon" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <a href="notifications.html" class="icon-btn" aria-label="Notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </a>
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="User menu">
+                            <div class="user-avatar user-initials">AU</div>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width: 15px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item"><i data-lucide="settings" style="width: 15px;"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="login.html" class="dropdown-item"><i data-lucide="log-out" style="width: 15px;"></i> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <section class="page-header" aria-label="Content Header">
+                    <div>
+                        <h1 class="page-header-title">Content & Publishing</h1>
+                        <p class="page-header-subtitle">Manage articles, product updates, and documentation posts</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button type="button" class="btn-primary" data-open-modal="modal-post-editor">
+                            <i data-lucide="plus" style="width: 15px;"></i>
+                            <span>Create Post</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- POSTS LIST TABLE -->
+                <section class="card-panel" aria-label="Posts Table">
+                    <div class="table-responsive-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Views</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="content-posts-tbody"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="app-footer">
+                <div>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</div>
+                <div class="footer-links">
+                    <a href="settings.html">Documentation</a>
+                    <a href="settings.html">Privacy</a>
+                    <a href="settings.html">Support</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- POST EDITOR MODAL (QUILL.JS) -->
+    <div class="modal-overlay" id="modal-post-editor" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 760px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="post-editor-modal-title">New Post</h3>
+                <button type="button" class="modal-close-btn" data-close-modal aria-label="Close modal">&times;</button>
+            </div>
+            <form id="post-editor-form" novalidate>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="post-title" class="form-label">Post Title</label>
+                        <input type="text" id="post-title" class="form-input" placeholder="e.g. Q4 Platform Release Notes" required minlength="4">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="form-group">
+                            <label for="post-category" class="form-label">Category</label>
+                            <select id="post-category" class="form-select-ctrl">
+                                <option value="Announcements">Announcements</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Architecture">Architecture</option>
+                                <option value="DevOps">DevOps</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="post-status" class="form-label">Status</label>
+                            <select id="post-status" class="form-select-ctrl">
+                                <option value="Published">Published</option>
+                                <option value="Draft">Draft</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Quill Rich Text Editor Container -->
+                    <div class="form-group">
+                        <label class="form-label">Post Body</label>
+                        <input type="hidden" id="post-body-hidden" name="post_body">
+                        <div id="content-quill-editor"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close-modal>Cancel</button>
+                    <button type="submit" class="btn-primary">Save Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/modals.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tbody = document.getElementById("content-posts-tbody");
+
+            // Initialize Quill Editor
+            const postEditor = initEditor("#content-quill-editor", {
+                placeholder: "Draft your post content, code blocks, lists, and headings...",
+                hiddenInputId: "post-body-hidden",
+                ariaLabel: "Post Body Content Editor"
+            });
+
+            function renderPosts() {
+                let html = "";
+                MockContentPostsData.forEach((post, index) => {
+                    const badgeClass = post.status === "Published" ? "badge-success" : "badge-warning";
+                    html += `
+                        <tr>
+                            <td style="font-weight: 600; color: var(--color-text-muted);">${post.id}</td>
+                            <td style="font-weight: 600;">${post.title}</td>
+                            <td>${post.author}</td>
+                            <td>${post.category}</td>
+                            <td><span class="badge ${badgeClass}">${post.status}</span></td>
+                            <td>${post.date}</td>
+                            <td>${post.views}</td>
+                            <td style="text-align: right;">
+                                <div class="table-row-actions" style="justify-content: flex-end;">
+                                    <button type="button" class="table-action-icon-btn" title="Edit post" onclick="editPost(${index})">
+                                        <i data-lucide="edit-2" style="width: 14px; height: 14px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+                if (tbody) tbody.innerHTML = html;
+                if (window.lucide) window.lucide.createIcons();
+            }
+
+            renderPosts();
+
+            window.editPost = function(index) {
+                const post = MockContentPostsData[index];
+                document.getElementById("post-editor-modal-title").textContent = "Edit Post";
+                document.getElementById("post-title").value = post.title;
+                document.getElementById("post-category").value = post.category;
+                document.getElementById("post-status").value = post.status;
+                if (postEditor) {
+                    postEditor.clipboard.dangerouslyPasteHTML(post.body);
+                }
+                openModal("modal-post-editor");
+            };
+
+            // Form validation & submission
+            setupFormValidation("#post-editor-form", (form) => {
+                const title = document.getElementById("post-title").value;
+                const category = document.getElementById("post-category").value;
+                const status = document.getElementById("post-status").value;
+
+                MockContentPostsData.unshift({
+                    id: "POST-" + Math.floor(10 + Math.random() * 90),
+                    title: title,
+                    author: "Admin User",
+                    category: category,
+                    status: status,
+                    views: "0",
+                    date: "Just now",
+                    body: postEditor ? postEditor.root.innerHTML : ""
+                });
+
+                renderPosts();
+                closeModal("modal-post-editor");
+                form.reset();
+                if (postEditor) postEditor.setText("");
+                showToast(`Post "${title}" saved successfully`, "success");
+            });
+        });
+    </script>
+</body>
+</html>

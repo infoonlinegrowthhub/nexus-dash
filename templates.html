@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Reusable Communication Templates">
+    <title>Templates - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Quill.js CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
+                    </div>
+                </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search templates..." aria-label="Search templates">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button type="button" class="icon-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="theme-icon" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <a href="notifications.html" class="icon-btn" aria-label="Notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </a>
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="User menu">
+                            <div class="user-avatar user-initials">AU</div>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width: 15px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item"><i data-lucide="settings" style="width: 15px;"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="login.html" class="dropdown-item"><i data-lucide="log-out" style="width: 15px;"></i> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <section class="page-header" aria-label="Templates Header">
+                    <div>
+                        <h1 class="page-header-title">Message Templates</h1>
+                        <p class="page-header-subtitle">Pre-formatted responses, notification schemas, and email templates</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button type="button" class="btn-primary" data-open-modal="modal-edit-template">
+                            <i data-lucide="plus" style="width: 15px;"></i>
+                            <span>New Template</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="toggle-cards-grid" id="templates-grid-container" aria-label="Template Cards">
+                    <!-- Populated dynamically -->
+                </section>
+            </main>
+
+            <footer class="app-footer">
+                <div>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</div>
+                <div class="footer-links">
+                    <a href="settings.html">Documentation</a>
+                    <a href="settings.html">Privacy</a>
+                    <a href="settings.html">Support</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- TEMPLATE EDITOR MODAL (QUILL.JS) -->
+    <div class="modal-overlay" id="modal-edit-template" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 680px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="template-modal-title">Edit Template</h3>
+                <button type="button" class="modal-close-btn" data-close-modal aria-label="Close modal">&times;</button>
+            </div>
+            <form id="template-form" novalidate>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="tpl-title" class="form-label">Template Title</label>
+                        <input type="text" id="tpl-title" class="form-input" placeholder="e.g. Account Verification" required minlength="3">
+                    </div>
+                    <div class="form-group">
+                        <label for="tpl-category" class="form-label">Category</label>
+                        <select id="tpl-category" class="form-select-ctrl">
+                            <option value="Email">Email</option>
+                            <option value="Orders">Orders</option>
+                            <option value="Security">Security</option>
+                            <option value="Reports">Reports</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Template Body (HTML / Rich Text)</label>
+                        <input type="hidden" id="tpl-body-hidden" name="template_body">
+                        <div id="template-quill-editor"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close-modal>Cancel</button>
+                    <button type="submit" class="btn-primary">Save Template</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/modals.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById("templates-grid-container");
+
+            const tplEditor = initEditor("#template-quill-editor", {
+                placeholder: "Compose reusable template layout...",
+                hiddenInputId: "tpl-body-hidden",
+                ariaLabel: "Message Template Editor"
+            });
+
+            function renderTemplates() {
+                let html = "";
+                MockTemplatesData.forEach((t, idx) => {
+                    html += `
+                        <div class="toggle-card">
+                            <div class="toggle-card-header">
+                                <div>
+                                    <h3 class="toggle-card-title">${t.title}</h3>
+                                    <span class="badge badge-info" style="margin-top: 4px;">${t.category}</span>
+                                </div>
+                            </div>
+                            <p class="toggle-card-desc">${t.preview}</p>
+                            <div style="display: flex; align-items: center; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--color-border-subtle); padding-top: 10px;">
+                                <button type="button" class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" onclick="duplicateTemplate(${idx})">
+                                    <i data-lucide="copy" style="width: 12px; height: 12px;"></i>
+                                    <span>Duplicate</span>
+                                </button>
+                                <button type="button" class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" onclick="previewTemplate(${idx})">
+                                    <i data-lucide="edit-3" style="width: 12px; height: 12px;"></i>
+                                    <span>Edit</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                if (container) container.innerHTML = html;
+                if (window.lucide) window.lucide.createIcons();
+            }
+
+            renderTemplates();
+
+            window.previewTemplate = function(idx) {
+                const tpl = MockTemplatesData[idx];
+                document.getElementById("template-modal-title").textContent = `Edit "${tpl.title}"`;
+                document.getElementById("tpl-title").value = tpl.title;
+                document.getElementById("tpl-category").value = tpl.category;
+                if (tplEditor) {
+                    tplEditor.clipboard.dangerouslyPasteHTML(tpl.content);
+                }
+                openModal("modal-edit-template");
+            };
+
+            window.duplicateTemplate = function(idx) {
+                const orig = MockTemplatesData[idx];
+                MockTemplatesData.push({
+                    id: "TPL-" + Math.floor(10 + Math.random() * 90),
+                    title: `${orig.title} (Copy)`,
+                    category: orig.category,
+                    preview: orig.preview,
+                    content: orig.content
+                });
+                renderTemplates();
+                showToast(`Duplicated "${orig.title}"`, "success");
+            };
+
+            setupFormValidation("#template-form", (form) => {
+                const title = document.getElementById("tpl-title").value;
+                const cat = document.getElementById("tpl-category").value;
+
+                MockTemplatesData.unshift({
+                    id: "TPL-" + Math.floor(10 + Math.random() * 90),
+                    title: title,
+                    category: cat,
+                    preview: tplEditor ? tplEditor.getText().slice(0, 80) + "..." : "",
+                    content: tplEditor ? tplEditor.root.innerHTML : ""
+                });
+
+                renderTemplates();
+                closeModal("modal-edit-template");
+                form.reset();
+                if (tplEditor) tplEditor.setText("");
+                showToast("Template saved", "success");
+            });
+        });
+    </script>
+</body>
+</html>

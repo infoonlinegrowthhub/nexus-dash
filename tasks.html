@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Kanban Project Board">
+    <title>Tasks - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
+                    </div>
+                </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search tasks..." aria-label="Search tasks">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button type="button" class="icon-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="theme-icon" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <a href="notifications.html" class="icon-btn" aria-label="Notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </a>
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="User menu">
+                            <div class="user-avatar user-initials">AU</div>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width: 15px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item"><i data-lucide="settings" style="width: 15px;"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="login.html" class="dropdown-item"><i data-lucide="log-out" style="width: 15px;"></i> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <section class="page-header" aria-label="Tasks Header">
+                    <div>
+                        <h1 class="page-header-title">Task Pipeline</h1>
+                        <p class="page-header-subtitle">Interactive Kanban board with real-time status progression</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button type="button" class="btn-primary" data-open-modal="modal-add-task">
+                            <i data-lucide="plus" style="width: 15px;"></i>
+                            <span>Add Task</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- KANBAN BOARD -->
+                <div class="kanban-board-wrapper">
+                    <section class="kanban-board" aria-label="Kanban Board Columns">
+                        <!-- Column 1: To Do -->
+                        <div class="kanban-column" id="col-todo" data-status="todo">
+                            <div class="kanban-column-header">
+                                <span class="kanban-column-title">To do (<span id="todo-count">0</span>)</span>
+                                <i data-lucide="circle" style="width: 14px; height: 14px; color: var(--color-text-subtle);"></i>
+                            </div>
+                            <div class="kanban-card-list" id="todo-cards"></div>
+                        </div>
+
+                        <!-- Column 2: In Progress -->
+                        <div class="kanban-column" id="col-in_progress" data-status="in_progress">
+                            <div class="kanban-column-header">
+                                <span class="kanban-column-title">In progress (<span id="in_progress-count">0</span>)</span>
+                                <i data-lucide="clock" style="width: 14px; height: 14px; color: var(--color-accent);"></i>
+                            </div>
+                            <div class="kanban-card-list" id="in_progress-cards"></div>
+                        </div>
+
+                        <!-- Column 3: Done -->
+                        <div class="kanban-column" id="col-done" data-status="done">
+                            <div class="kanban-column-header">
+                                <span class="kanban-column-title">Done (<span id="done-count">0</span>)</span>
+                                <i data-lucide="check-circle-2" style="width: 14px; height: 14px; color: var(--color-success);"></i>
+                            </div>
+                            <div class="kanban-card-list" id="done-cards"></div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+
+            <footer class="app-footer">
+                <div>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</div>
+                <div class="footer-links">
+                    <a href="settings.html">Documentation</a>
+                    <a href="settings.html">Privacy</a>
+                    <a href="settings.html">Support</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ADD TASK MODAL -->
+    <div class="modal-overlay" id="modal-add-task" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Kanban Task</h3>
+                <button type="button" class="modal-close-btn" data-close-modal aria-label="Close modal">&times;</button>
+            </div>
+            <form id="add-task-form" novalidate>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="task-title" class="form-label">Task Summary</label>
+                        <input type="text" id="task-title" class="form-input" placeholder="e.g. Upgrade payment API webhooks" required minlength="4">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="form-group">
+                            <label for="task-category" class="form-label">Category</label>
+                            <input type="text" id="task-category" class="form-input" placeholder="e.g. Backend" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-priority" class="form-label">Priority</label>
+                            <select id="task-priority" class="form-select-ctrl">
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close-modal>Cancel</button>
+                    <button type="submit" class="btn-primary">Add Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/modals.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let draggedCardId = null;
+
+            function renderBoard() {
+                const cols = ["todo", "in_progress", "done"];
+                cols.forEach(colKey => {
+                    const container = document.getElementById(`${colKey}-cards`);
+                    const countEl = document.getElementById(`${colKey}-count`);
+                    const items = MockTasksData[colKey] || [];
+                    if (countEl) countEl.textContent = items.length;
+
+                    let html = "";
+                    items.forEach(t => {
+                        let badgeClass = "badge-info";
+                        if (t.priority === "High") badgeClass = "badge-danger";
+                        if (t.priority === "Medium") badgeClass = "badge-warning";
+
+                        html += `
+                            <div class="kanban-card" draggable="true" id="${t.id}" data-col="${colKey}">
+                                <div class="kanban-card-title">${t.title}</div>
+                                <div class="kanban-card-footer">
+                                    <span class="badge ${badgeClass}">${t.priority}</span>
+                                    <span>Due ${t.dueDate}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    if (container) container.innerHTML = html;
+                });
+
+                attachDragEvents();
+                if (window.lucide) window.lucide.createIcons();
+            }
+
+            function attachDragEvents() {
+                const cards = document.querySelectorAll(".kanban-card");
+                cards.forEach(card => {
+                    card.addEventListener("dragstart", (e) => {
+                        draggedCardId = card.id;
+                        card.style.opacity = "0.5";
+                        e.dataTransfer.setData("text/plain", card.id);
+                    });
+
+                    card.addEventListener("dragend", () => {
+                        card.style.opacity = "1";
+                    });
+                });
+
+                const columns = document.querySelectorAll(".kanban-column");
+                columns.forEach(col => {
+                    col.addEventListener("dragover", (e) => {
+                        e.preventDefault();
+                        col.style.backgroundColor = "var(--color-surface-hover)";
+                    });
+
+                    col.addEventListener("dragleave", () => {
+                        col.style.backgroundColor = "var(--color-bg)";
+                    });
+
+                    col.addEventListener("drop", (e) => {
+                        e.preventDefault();
+                        col.style.backgroundColor = "var(--color-bg)";
+                        const targetStatus = col.getAttribute("data-status");
+
+                        // Find the dragged card across all columns
+                        let foundItem = null;
+                        let sourceCol = null;
+
+                        for (const key of ["todo", "in_progress", "done"]) {
+                            const idx = MockTasksData[key].findIndex(t => t.id === draggedCardId);
+                            if (idx !== -1) {
+                                foundItem = MockTasksData[key].splice(idx, 1)[0];
+                                sourceCol = key;
+                                break;
+                            }
+                        }
+
+                        if (foundItem) {
+                            MockTasksData[targetStatus].push(foundItem);
+                            renderBoard();
+                            showToast(`Task moved to ${targetStatus.replace('_', ' ')}`, "success");
+                        }
+                    });
+                });
+            }
+
+            renderBoard();
+
+            // Form validation & submission
+            setupFormValidation("#add-task-form", (form) => {
+                const title = document.getElementById("task-title").value;
+                const category = document.getElementById("task-category").value;
+                const priority = document.getElementById("task-priority").value;
+
+                MockTasksData.todo.unshift({
+                    id: "TSK-" + Math.floor(100 + Math.random() * 900),
+                    title: title,
+                    category: category,
+                    priority: priority,
+                    dueDate: "Next week"
+                });
+
+                renderBoard();
+                closeModal("modal-add-task");
+                form.reset();
+                showToast("Task added to pipeline", "success");
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Messages & Communications Inbox">
+    <title>Messages - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Quill.js CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
+                    </div>
+                </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search conversations..." aria-label="Search messages">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button type="button" class="icon-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="theme-icon" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <a href="notifications.html" class="icon-btn" aria-label="Notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </a>
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="User menu">
+                            <div class="user-avatar user-initials">AU</div>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width: 15px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item"><i data-lucide="settings" style="width: 15px;"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="login.html" class="dropdown-item"><i data-lucide="log-out" style="width: 15px;"></i> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <section class="page-header" aria-label="Messages Header">
+                    <div>
+                        <h1 class="page-header-title">Direct Messages & Inquiries</h1>
+                        <p class="page-header-subtitle">Real-time team communications and customer conversations</p>
+                    </div>
+                </section>
+
+                <!-- TWO-PANE INBOX LAYOUT -->
+                <section class="messages-layout" aria-label="Inbox Viewport">
+                    <!-- Left: Conversation list -->
+                    <div class="messages-sidebar">
+                        <div class="messages-sidebar-header">
+                            <input type="text" class="search-input" placeholder="Filter chats..." aria-label="Filter chats" style="height: 34px;">
+                        </div>
+                        <div class="messages-list" id="conversations-list-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Thread Pane -->
+                    <div class="message-thread-pane">
+                        <div class="message-thread-header">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="conversation-avatar" id="thread-avatar">SJ</div>
+                                <div>
+                                    <h2 class="conversation-name" id="thread-name">Sarah Jenkins</h2>
+                                    <p class="conversation-time" id="thread-status">Active now &bull; Super Admin</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="message-bubbles-area" id="message-bubbles-container">
+                            <!-- Populated dynamically -->
+                        </div>
+
+                        <!-- Compact Quill Reply Box -->
+                        <div class="message-reply-container">
+                            <form id="message-reply-form" novalidate>
+                                <input type="hidden" id="reply-body-hidden" name="reply">
+                                <div id="messages-compact-editor"></div>
+                                <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                                    <button type="submit" class="btn-primary" style="height: 38px;">
+                                        <span>Send Reply</span>
+                                        <i data-lucide="send" style="width: 14px; height: 14px;"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="app-footer">
+                <div>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</div>
+                <div class="footer-links">
+                    <a href="settings.html">Documentation</a>
+                    <a href="settings.html">Privacy</a>
+                    <a href="settings.html">Support</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Render Conversations
+            const convContainer = document.getElementById("conversations-list-container");
+            let convHtml = "";
+            MockMessagesData.conversations.forEach((c, idx) => {
+                convHtml += `
+                    <div class="conversation-item ${idx === 0 ? 'active' : ''}">
+                        <div class="conversation-avatar">${c.avatar}</div>
+                        <div class="conversation-details">
+                            <div class="conversation-top">
+                                <span class="conversation-name">${c.name}</span>
+                                <span class="conversation-time">${c.time}</span>
+                            </div>
+                            <div class="conversation-preview">${c.lastMessage}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            if (convContainer) convContainer.innerHTML = convHtml;
+
+            // Render Thread
+            const bubblesContainer = document.getElementById("message-bubbles-container");
+            function renderThread() {
+                let threadHtml = "";
+                MockMessagesData.thread.forEach(msg => {
+                    const sideClass = msg.isMe ? "mine" : "theirs";
+                    threadHtml += `
+                        <div class="message-bubble-wrapper ${sideClass}">
+                            <div>
+                                <div class="message-bubble">${msg.text}</div>
+                                <div class="message-meta-time" style="text-align: ${msg.isMe ? 'right' : 'left'};">${msg.time}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                if (bubblesContainer) bubblesContainer.innerHTML = threadHtml;
+            }
+            renderThread();
+
+            // Initialize Compact Quill Editor
+            const replyEditor = initEditor("#messages-compact-editor", {
+                compact: true,
+                placeholder: "Type your reply...",
+                hiddenInputId: "reply-body-hidden",
+                ariaLabel: "Message Reply Text Box",
+                showCounter: false
+            });
+
+            // Handle Reply Form Submit
+            const form = document.getElementById("message-reply-form");
+            if (form) {
+                form.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    if (!replyEditor) return;
+                    const text = replyEditor.getText().trim();
+                    if (text === "") {
+                        showToast("Message cannot be empty", "warning");
+                        return;
+                    }
+
+                    MockMessagesData.thread.push({
+                        id: "th-" + Date.now(),
+                        sender: "Admin User",
+                        avatar: "AU",
+                        isMe: true,
+                        time: "Just now",
+                        text: text
+                    });
+
+                    renderThread();
+                    replyEditor.setText("");
+                    bubblesContainer.scrollTop = bubblesContainer.scrollHeight;
+                    showToast("Message delivered", "success");
+                });
+            }
+        });
+    </script>
+</body>
+</html>

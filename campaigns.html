@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Marketing & Outreach Campaigns">
+    <title>Campaigns - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Quill.js CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
+                    </div>
+                </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search campaigns..." aria-label="Search campaigns">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button type="button" class="icon-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="theme-icon" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <a href="notifications.html" class="icon-btn" aria-label="Notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </a>
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="User menu">
+                            <div class="user-avatar user-initials">AU</div>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width: 15px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item"><i data-lucide="settings" style="width: 15px;"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="login.html" class="dropdown-item"><i data-lucide="log-out" style="width: 15px;"></i> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <section class="page-header" aria-label="Campaigns Header">
+                    <div>
+                        <h1 class="page-header-title">Campaigns & Outreach</h1>
+                        <p class="page-header-subtitle">Active distribution schedules, delivery channels, and conversion metrics</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button type="button" class="btn-primary" data-open-modal="modal-create-campaign">
+                            <i data-lucide="plus" style="width: 15px;"></i>
+                            <span>Create Campaign</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="toggle-cards-grid" id="campaigns-grid-container" aria-label="Campaign Cards">
+                    <!-- Populated dynamically -->
+                </section>
+            </main>
+
+            <footer class="app-footer">
+                <div>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</div>
+                <div class="footer-links">
+                    <a href="settings.html">Documentation</a>
+                    <a href="settings.html">Privacy</a>
+                    <a href="settings.html">Support</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- CREATE CAMPAIGN MODAL (WITH QUILL.JS) -->
+    <div class="modal-overlay" id="modal-create-campaign" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 680px;">
+            <div class="modal-header">
+                <h3 class="modal-title">New Campaign</h3>
+                <button type="button" class="modal-close-btn" data-close-modal aria-label="Close modal">&times;</button>
+            </div>
+            <form id="create-campaign-form" novalidate>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="cmp-name" class="form-label">Campaign Name</label>
+                        <input type="text" id="cmp-name" class="form-input" placeholder="e.g. Black Friday Special Notice" required minlength="4">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="form-group">
+                            <label for="cmp-channel" class="form-label">Channel</label>
+                            <select id="cmp-channel" class="form-select-ctrl">
+                                <option value="Email Newsletter">Email Newsletter</option>
+                                <option value="In-App Prompt">In-App Prompt</option>
+                                <option value="Paid Search">Paid Search</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cmp-budget" class="form-label">Budget ($)</label>
+                            <input type="text" id="cmp-budget" class="form-input" placeholder="$1,000" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Message Body (Rich Text)</label>
+                        <input type="hidden" id="cmp-body-hidden" name="cmp_body">
+                        <div id="campaign-quill-editor"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close-modal>Cancel</button>
+                    <button type="submit" class="btn-primary">Launch Campaign</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/modals.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById("campaigns-grid-container");
+
+            function renderCampaigns() {
+                let html = "";
+                MockCampaignsData.forEach((c, idx) => {
+                    const statusClass = c.active ? "badge-success" : "badge-warning";
+                    const statusText = c.active ? "Active" : "Paused";
+
+                    html += `
+                        <div class="toggle-card">
+                            <div class="toggle-card-header">
+                                <div>
+                                    <h3 class="toggle-card-title">${c.name}</h3>
+                                    <p class="toggle-card-desc">${c.channel} &bull; ${c.audience}</p>
+                                </div>
+                                <label class="switch-toggle" aria-label="Toggle campaign active state">
+                                    <input type="checkbox" class="switch-input" ${c.active ? 'checked' : ''} onchange="toggleCampaign(${idx}, this.checked)">
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--color-border-subtle); padding-top: 12px;">
+                                <div>
+                                    <span style="font-size: 11px; color: var(--color-text-muted);">Budget: <strong>${c.budget}</strong></span>
+                                    <span style="font-size: 11px; color: var(--color-text-muted); margin-left: 8px;">Conv: <strong>${c.conversion}</strong></span>
+                                </div>
+                                <span class="badge ${statusClass}">${statusText}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                if (container) container.innerHTML = html;
+            }
+
+            renderCampaigns();
+
+            window.toggleCampaign = function(idx, isChecked) {
+                MockCampaignsData[idx].active = isChecked;
+                renderCampaigns();
+                showToast(`Campaign ${isChecked ? 'activated' : 'paused'}`, "info");
+            };
+
+            const campaignEditor = initEditor("#campaign-quill-editor", {
+                placeholder: "Compose broadcast email or in-app message...",
+                hiddenInputId: "cmp-body-hidden",
+                ariaLabel: "Campaign Message Body Editor"
+            });
+
+            setupFormValidation("#create-campaign-form", (form) => {
+                const name = document.getElementById("cmp-name").value;
+                const channel = document.getElementById("cmp-channel").value;
+                const budget = document.getElementById("cmp-budget").value;
+
+                MockCampaignsData.unshift({
+                    id: "CMP-" + Math.floor(10 + Math.random() * 90),
+                    name: name,
+                    channel: channel,
+                    audience: "0 recipients",
+                    conversion: "0.0%",
+                    budget: budget,
+                    active: true,
+                    body: campaignEditor ? campaignEditor.root.innerHTML : ""
+                });
+
+                renderCampaigns();
+                closeModal("modal-create-campaign");
+                form.reset();
+                if (campaignEditor) campaignEditor.setText("");
+                showToast(`Campaign "${name}" scheduled`, "success");
+            });
+        });
+    </script>
+</body>
+</html>

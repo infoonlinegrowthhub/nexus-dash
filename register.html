@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Account Registration">
+    <title>Create Account - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="auth-layout">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="brand-badge" style="margin: 0 auto 12px auto;">N</div>
+            <h1 class="auth-title">Create Account</h1>
+            <p class="auth-subtitle">Get started with your administrator workspace</p>
+        </div>
+
+        <form id="register-form" novalidate>
+            <div class="form-group" style="margin-bottom: 14px;">
+                <label for="reg-name" class="form-label">Full Name</label>
+                <input type="text" id="reg-name" name="name" class="form-input" placeholder="Admin User" required minlength="2">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+                <label for="reg-email" class="form-label">Email Address</label>
+                <input type="email" id="reg-email" name="email" class="form-input" placeholder="admin@example.com" required>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+                <label for="reg-password" class="form-label">Password</label>
+                <input type="password" id="reg-password" name="password" class="form-input" placeholder="••••••••" required minlength="8">
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+                <input type="checkbox" id="terms" name="terms" required style="accent-color: var(--color-primary); width: 16px; height: 16px;">
+                <label for="terms" style="font-size: 12px; color: var(--color-text-muted); cursor: pointer;">
+                    I agree to the Terms of Service & Privacy Policy
+                </label>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; height: 44px; font-size: 14px;">
+                <span>Create Workspace</span>
+                <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+            </button>
+        </form>
+
+        <div style="text-align: center; font-size: 12px; color: var(--color-text-muted); border-top: 1px solid var(--color-border); padding-top: 16px;">
+            <span>Already have an account?</span>
+            <a href="login.html" style="color: var(--color-primary); font-weight: 600; margin-left: 4px;">Sign in</a>
+        </div>
+    </div>
+
+    <script src="js/toast.js"></script>
+    <script src="js/forms.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (window.lucide) window.lucide.createIcons();
+
+            setupFormValidation("#register-form", (form) => {
+                showToast("Account created successfully! Redirecting to login...", "success");
+                setTimeout(() => {
+                    window.location.href = "login.html";
+                }, 800);
+            });
+        });
+    </script>
+</body>
+</html>

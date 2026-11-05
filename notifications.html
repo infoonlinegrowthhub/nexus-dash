@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Dash - Notifications Center">
+    <title>Notifications - Nexus Dash</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="sidebar" id="app-sidebar" aria-label="Primary Navigation">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-wrapper">
+                    <div class="brand-badge">N</div>
+                    <div class="brand-details">
+                        <span class="brand-title site-brand-title">Nexus Dash</span>
+                        <span class="brand-subtitle site-brand-subtitle">Admin Console</span>
+                    </div>
+                </a>
+                <button type="button" class="sidebar-close-btn" id="mobile-menu-close-btn" aria-label="Close sidebar">
+                    <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+            <nav class="sidebar-content" id="sidebar-nav-container" aria-label="Sidebar Menu"></nav>
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-user-tile">
+                    <div class="sidebar-user-avatar user-initials">AU</div>
+                    <div class="sidebar-user-details">
+                        <p class="sidebar-user-name" id="sidebar-user-name">Admin User</p>
+                        <p class="sidebar-user-role" id="sidebar-user-role">Administrator</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle-btn" id="mobile-menu-open-btn" aria-label="Open sidebar">
+                        <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search notifications..." aria-label="Search notifications">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button type="button" class="icon-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i data-lucide="moon" class="theme-icon" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <a href="notifications.html" class="icon-btn" aria-label="Notifications">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                        <span class="btn-badge"></span>
+                    </a>
+                    <div class="user-menu-wrapper">
+                        <button type="button" class="user-menu-btn" id="user-menu-btn" aria-label="User menu">
+                            <div class="user-avatar user-initials">AU</div>
+                            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-dropdown-menu" role="menu">
+                            <div class="dropdown-header">
+                                <p class="dropdown-header-name" id="dropdown-user-name">Admin User</p>
+                                <p class="dropdown-header-email" id="dropdown-user-email">admin@example.com</p>
+                            </div>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width: 15px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item"><i data-lucide="settings" style="width: 15px;"></i> Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="login.html" class="dropdown-item"><i data-lucide="log-out" style="width: 15px;"></i> Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <section class="page-header" aria-label="Notifications Header">
+                    <div>
+                        <h1 class="page-header-title">Notifications</h1>
+                        <p class="page-header-subtitle">System status broadcasts, audit notices, and transaction alerts</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button type="button" class="btn-secondary" id="mark-all-read-btn">
+                            <i data-lucide="check" style="width: 15px;"></i>
+                            <span>Mark all as read</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="card-panel" aria-label="Notifications List">
+                    <div id="notifications-list-container" style="display: flex; flex-direction: column; gap: 10px;">
+                        <!-- Populated dynamically -->
+                    </div>
+                </section>
+            </main>
+
+            <footer class="app-footer">
+                <div>Nexus Dash v1.0.0 &bull; Open Source Administrative Template</div>
+                <div class="footer-links">
+                    <a href="settings.html">Documentation</a>
+                    <a href="settings.html">Privacy</a>
+                    <a href="settings.html">Support</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="config/site.js"></script>
+    <script src="data/mock.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById("notifications-list-container");
+
+            function renderNotifications() {
+                let html = "";
+                MockNotificationsData.forEach((n, idx) => {
+                    let iconName = "bell";
+                    let iconColor = "var(--color-primary)";
+                    if (n.type === "success") { iconName = "check-circle"; iconColor = "var(--color-success)"; }
+                    if (n.type === "warning") { iconName = "alert-triangle"; iconColor = "var(--color-warning)"; }
+                    if (n.type === "info") { iconName = "info"; iconColor = "var(--color-info)"; }
+
+                    const bgStyle = n.unread ? "background-color: var(--color-surface-hover);" : "background-color: var(--color-surface);";
+
+                    html += `
+                        <div style="${bgStyle} border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 14px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;">
+                            <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                <div style="margin-top: 2px;">
+                                    <i data-lucide="${iconName}" style="width: 20px; height: 20px; color: ${iconColor};"></i>
+                                </div>
+                                <div>
+                                    <h3 style="font-size: 13px; font-weight: 600; color: var(--color-text-main);">${n.title}</h3>
+                                    <p style="font-size: 12px; color: var(--color-text-muted); margin-top: 2px;">${n.desc}</p>
+                                    <span style="font-size: 11px; color: var(--color-text-subtle); margin-top: 6px; display: block;">${n.time}</span>
+                                </div>
+                            </div>
+                            ${n.unread ? `<span class="badge badge-info">Unread</span>` : `<span style="font-size: 11px; color: var(--color-text-subtle);">Read</span>`}
+                        </div>
+                    `;
+                });
+
+                if (container) container.innerHTML = html;
+                if (window.lucide) window.lucide.createIcons();
+            }
+
+            renderNotifications();
+
+            const markAllBtn = document.getElementById("mark-all-read-btn");
+            if (markAllBtn) {
+                markAllBtn.addEventListener("click", () => {
+                    MockNotificationsData.forEach(n => n.unread = false);
+                    renderNotifications();
+                    showToast("All notifications marked as read", "success");
+                });
+            }
+        });
+    </script>
+</body>
+</html>

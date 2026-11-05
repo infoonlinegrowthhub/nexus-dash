@@ -9,6 +9,11 @@
 node_modules/
 vendor/
 
+# Test output
+tests/
+test-results/
+playwright-report/
+
 # Operating System Files
 .DS_Store
 Thumbs.db
