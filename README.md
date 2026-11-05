@@ -1,15 +1,15 @@
-# ⚡ NexusDash — Modular Production PHP Dashboard & Application Framework
+# ⚡ NexusDash — Reusable Production HTML5 Admin Dashboard Template
 
 [![Engineered by Online Growth Hub](https://img.shields.io/badge/Engineered%20By-Online%20Growth%20Hub-blue?style=for-the-badge)](https://onlinegrowthhub.in)
 [![Direct Contact](https://img.shields.io/badge/WhatsApp%20%2F%20Call-%2B91%209032666855-25D366?style=for-the-badge&logo=whatsapp)](https://wa.me/919032666855?text=Hi%20Online%20Growth%20Hub,%20I%20am%20interested%20in%20custom%20software%20and%20web%20development.)
 [![License](https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge)](#)
 
-> **NexusDash** is a high-performance, modular PHP admin dashboard and full-stack starter kit designed for rapid project development, client portals, SaaS applications, ERPs, and agency client deliveries. Zero-build steps, zero Node.js headaches, 100% pure PHP + Tailwind utility styling + Lucide icons.
+> **NexusDash** is a modern, high-trust, responsive **HTML5 Admin Dashboard Template** designed for instant replication across any project (PHP, Laravel, Node.js, Python, or static sites). Zero backend gates, zero build tools, pure static HTML5 with Tailwind CSS and Lucide icons.
 
 ---
 
 ## 💼 Need Custom Software, Web Apps, or Client Portals?
-If you are looking to build a high-performance web application, custom CRM, Razorpay payment flow, ERP system, or automated Hostinger cloud deployment:
+If you want a custom production web application, payment integrations, or enterprise CRM built by professionals:
 
 * **Official Website:** [onlinegrowthhub.in](https://onlinegrowthhub.in)
 * **Direct Call / WhatsApp:** **[+91 9032666855](https://wa.me/919032666855?text=Hello%20Online%20Growth%20Hub,%20I%20want%20to%20hire%20you%20for%20a%20project)**
@@ -17,82 +17,43 @@ If you are looking to build a high-performance web application, custom CRM, Razo
 
 ---
 
-## 🚀 Key Highlights & Architectural Strengths
+## 🌟 Key Features
 
-* **⚡ Zero Build Step (Instant Run):** Runs immediately on XAMPP, WAMP, LAMP, or any shared/cloud cPanel/Hostinger hosting without `npm run build` or heavy Node.js dependencies.
-* **🎨 Modern High-Trust UI (WACRM Inspired):** Deep slate `#0b1120` sidebar, crisp 1px borders, smooth glassmorphic stats cards, and WCAG AA contrast.
-* **📱 100% Responsive Mobile Drawer:** Collapsible sidebar on desktop with a sleek offcanvas slide-over drawer on mobile devices.
-* **🧩 1-Line Navigation Configuration:** Add, rename, or reorder menu items across your entire dashboard in seconds via a single PHP array in `config/app.php`.
-* **🛡️ Secure Session Authentication:** Session guards, clean login/logout architecture, and password hashing support.
-* **📊 Pre-Built CRUD Architecture:** Ready-to-replicate Data Table with search, category filtering, status pills, and slide-over creation modal.
-* **🔔 Native Toast Alerts:** Lightweight, animated toast notifications for instant user feedback.
+* **⚡ Pure Static HTML5 (Zero Dependencies):** Just double-click `index.html` to open in any browser. No PHP, Node.js, database, or login setup required.
+* **🎨 Clean WACRM Design Consistency:** Pure white sidebar, signature `#25D366` green active pills, `#f5f8fc` canvas background, and crisp `border-slate-300` cards.
+* **📱 Dual-Mode Table Responsiveness:** 
+  - On Desktop (≥ 768px): Sticky header table with clean borders.
+  - On Mobile (< 768px): Automatically transforms into structured mobile cards with zero horizontal overflow or cut-off.
+* **📲 Mobile Bottom Navigation Bar:** Fixed bottom bar (< 1024px) with quick navigation and left slide-over drawer.
+* **🔔 Native Interactive Features:** Modal dialogs, user profile dropdowns, and toast notification alerts.
 
 ---
 
-## 📂 Architecture & Directory Structure
+## 📂 Template Files
 
 ```text
 nexus-dash/
-├── config/
-│   ├── app.php             # Core brand configuration, menu arrays, base URL helper
-│   └── db.php              # Secure PDO MySQL connection with fallback demo mode
-├── includes/
-│   ├── auth_guard.php      # Protects admin routes & manages authenticated session
-│   ├── header.php          # Meta, Tailwind CDN, Lucide icons, responsive wrapper
-│   ├── sidebar.php         # Modular sidebar & mobile drawer (Dynamic $nav_items loop)
-│   ├── topbar.php          # Search input, agency contact pill, user profile menu
-│   └── footer.php          # Bottom agency branding watermark & script initializers
 ├── assets/
-│   ├── css/nexus.css       # Core custom styling, card glassmorphism, scrollbars
-│   └── js/nexus.js         # Mobile drawer triggers, modal controllers, toast system
-├── database/
-│   └── schema.sql          # Ready-to-import MySQL database & sample records table
-├── index.php               # Main analytics dashboard & KPI metric tiles
-├── records.php             # Reusable CRUD data table with modal & search
-├── login.php               # Production-grade login page with demo credentials
-├── logout.php              # Secure session destruction
-├── .gitignore              # Git ignore rules for clean deployment
-└── README.md               # Documentation & client acquisition pitch
+│   ├── css/nexus.css        # Core styling & scrollbar polish
+│   └── js/nexus.js          # Mobile drawer, modal, and toast controllers
+├── index.html               # Main Dashboard Overview with KPI StatTiles & Activity Table
+├── records.html             # Projects & Records DataTable with search, filters & modal form
+├── .gitignore               # Clean Git rules
+└── README.md                # Documentation & client acquisition pitch
 ```
 
 ---
 
-## ⚡ Quick 2-Minute Setup
+## 🚀 How to Use / Replicate for Any Project
 
-### 1. Clone or Download
-```bash
-git clone https://github.com/your-username/nexus-dash.git
-```
-Or place the folder directly inside your local web server: `c:\xampp\htdocs\nexus-dash`.
-
-### 2. Import Database (Optional for First Run)
-* Open **phpMyAdmin** (`http://localhost/phpmyadmin`).
-* Import `database/schema.sql`.
-* *Note: NexusDash includes a smart fallback demo mode, so you can test and explore immediately even before importing MySQL!*
-
-### 3. Open in Browser
-Visit:  
-`http://localhost/nexus-dash/`
-
-**Default Demo Credentials:**
-* **Email:** `admin@onlinegrowthhub.in`
-* **Password:** `admin123`
-
----
-
-## 🛠️ How to Add a New Page / Menu Item
-
-Open `config/app.php` and simply add your new item to the `getNexusNavItems()` array:
-
-```php
-[
-    'title' => 'Invoices & Billing',
-    'url'   => 'invoices.php',
-    'icon'  => 'receipt',
-    'badge' => 'New'
-],
-```
-That's it! Your new page is automatically rendered in both desktop and mobile sidebars with active state detection.
+1. **Clone or Download:**
+   ```bash
+   git clone https://github.com/infoonlinegrowthhub/nexus-dash.git
+   ```
+2. **Open in Browser:**  
+   Open `index.html` directly in Chrome, Edge, or Brave.
+3. **Replicate for New Projects:**  
+   Copy the `assets/` folder and `index.html` into your new Laravel Blade, PHP, React, or Python project to instantly get an enterprise-grade admin UI!
 
 ---
 
@@ -101,5 +62,3 @@ That's it! Your new page is automatically rendered in both desktop and mobile si
 Need a dedicated development team for your next big idea?
 * **Website:** [https://onlinegrowthhub.in](https://onlinegrowthhub.in)
 * **Phone / WhatsApp:** [+91 9032666855](https://wa.me/919032666855)
-* **Email:** info@onlinegrowthhub.in
-
