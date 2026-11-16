@@ -7,6 +7,13 @@ let activityChartInstance = null;
 let statusDonutChartInstance = null;
 let analyticsInstances = {};
 
+// Configure global Chart.js defaults for high visibility
+if (window.Chart) {
+    Chart.defaults.color = "#334155";
+    Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
+    Chart.defaults.borderColor = "#e2e8f0";
+}
+
 function initCharts() {
     initActivityLineChart("7d");
     initStatusDonutChart();
@@ -49,8 +56,8 @@ function initActivityLineChart(initialRange = "7d") {
                 {
                     label: "Previous Period",
                     data: dataConfig.secondarySeries,
-                    borderColor: "#94a3b8",
-                    borderWidth: 1.5,
+                    borderColor: "#64748b",
+                    borderWidth: 1.8,
                     borderDash: [4, 4],
                     fill: false,
                     tension: 0.35,
@@ -71,7 +78,8 @@ function initActivityLineChart(initialRange = "7d") {
                         boxWidth: 12,
                         boxHeight: 12,
                         usePointStyle: true,
-                        color: "#64748b"
+                        color: "#334155",
+                        font: { weight: "600" }
                     }
                 },
                 tooltip: {
@@ -83,13 +91,14 @@ function initActivityLineChart(initialRange = "7d") {
             scales: {
                 x: {
                     grid: { display: false },
-                    ticks: { color: "#94a3b8" }
+                    ticks: { color: "#64748b", font: { weight: "500" } }
                 },
                 y: {
                     border: { dash: [3, 3] },
-                    grid: { color: "#f1f5f9" },
+                    grid: { color: "#e2e8f0" },
                     ticks: {
-                        color: "#94a3b8",
+                        color: "#64748b",
+                        font: { weight: "500" },
                         callback: function (val) {
                             return val >= 1000 ? (val / 1000) + "k" : val;
                         }

@@ -36,6 +36,11 @@ function setTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("nexus_theme", theme);
 
+    if (window.Chart) {
+        Chart.defaults.color = theme === "dark" ? "#cbd5e1" : "#334155";
+        Chart.defaults.borderColor = theme === "dark" ? "#334155" : "#e2e8f0";
+    }
+
     // Update icon states if toggle button exists
     const themeIcons = document.querySelectorAll(".theme-icon");
     themeIcons.forEach(icon => {
